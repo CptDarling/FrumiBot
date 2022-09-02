@@ -2,6 +2,7 @@
 
 const WebSocketClient = require('websocket').client;
 const config = require('./config.json');
+const fart = require('./farts.json');
 
 const client = new WebSocketClient();
 var channel = config.channel.name;
@@ -134,6 +135,16 @@ client.on('connect', function (connection) {
                             else if (account.toLowerCase() === parsedMessage.words[0].toLowerCase()) {
                                 connection.sendUTF(`PRIVMSG ${channel} :${notificationMessage}`);
                             }
+                            else if (
+                                'played' === parsedMessage.words[1] &&
+                                'FART' === parsedMessage.words[2] &&
+                                'for' === parsedMessage.words[3] &&
+                                '25' === parsedMessage.words[4] &&
+                                'Bits' === parsedMessage.words[5]
+                            ) {
+                                connection.sendUTF(`PRIVMSG ${channel} :Oh excuse you @${parsedMessage.source.nick}, that was ${randomFart()}!`);
+                            }
+                            }
                             else if ('weather' === parsedMessage.command.botCommand) {
                                 // console.log(`${JSON.stringify(parsedMessage)}`);
                                 var location = config.channel.location;
@@ -212,6 +223,18 @@ client.on('connect', function (connection) {
 });
 
 client.connect('ws://irc-ws.chat.twitch.tv:80');
+
+// Pick a random fart description from the fart json file.
+
+function randomFart() {
+    return randomWord(fart.farts);
+}
+
+// Pick a random word from the array.
+
+function randomWord(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+}
 
 // To delay a function execution in JavaScript by 1 second, wrap a promise execution
 // inside a function and wrap the Promise's resolve() in a setTimeout() as shown below. 

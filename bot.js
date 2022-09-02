@@ -144,6 +144,9 @@ client.on('connect', function (connection) {
                             ) {
                                 connection.sendUTF(`PRIVMSG ${channel} :Oh excuse you @${parsedMessage.source.nick}, that was ${randomFart()}!`);
                             }
+                            else if ('lurk' === parsedMessage.command.botCommand 
+                                || 'brb' === parsedMessage.command.botCommand) {
+                                delay(1000).then(() => connection.sendUTF(`PRIVMSG ${channel} :Bye @${parsedMessage.source.nick} o/`));
                             }
                             else if ('weather' === parsedMessage.command.botCommand) {
                                 // console.log(`${JSON.stringify(parsedMessage)}`);

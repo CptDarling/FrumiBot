@@ -130,7 +130,7 @@ client.on('connect', function (connection) {
                                 if (parsedMessage.words.length > 1) {
                                     sides = parsedMessage.words[1];
                                 }
-                                connection.sendUTF(`PRIVMSG ${channel} :You rolled a ${Math.floor(Math.random() * sides) + 1}`);
+                                connection.sendUTF(`PRIVMSG ${channel} :You rolled ${Math.floor(Math.random() * sides) + 1}`);
                             }
                             else if (account.toLowerCase() === parsedMessage.words[0].toLowerCase()) {
                                 connection.sendUTF(`PRIVMSG ${channel} :${notificationMessage}`);

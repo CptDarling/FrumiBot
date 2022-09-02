@@ -234,7 +234,22 @@ client.connect('ws://irc-ws.chat.twitch.tv:80');
 // Implement arsebot
 
 function arsebot(inWords) {
-    const resp = inWords.toString().replace(/us/g, "arse");
+    var resp = inWords.toString().replace(/us/g, "arse");
+    var respArr = [];
+    if (resp !== inWords.toString()) {
+        var i = 0;
+        var arr = inWords.toString().split(' ');
+        // Which word was replaced?
+        resp.split(' ').forEach((w) => {
+            if (w === arr[i]) {
+                respArr.push(w);
+            } else {
+                respArr.push('arse');
+            }
+            i++;
+        });
+        resp = respArr.join(' ');
+    }
     return resp;
 }
 

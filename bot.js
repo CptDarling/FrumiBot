@@ -183,6 +183,10 @@ client.on('connect', function (connection) {
                             }
                             else {
                                 // console.log(`${JSON.stringify(parsedMessage)}`);
+                                var repl = arsebot([parsedMessage.parameters]);
+                                if (repl != parsedMessage.parameters) {
+                                    connection.sendUTF(`PRIVMSG ${channel} :/me ${repl}`);
+                                }
                             }
 
                             break;
@@ -226,6 +230,13 @@ client.on('connect', function (connection) {
 });
 
 client.connect('ws://irc-ws.chat.twitch.tv:80');
+
+// Implement arsebot
+
+function arsebot(inWords) {
+    const resp = inWords.toString().replace(/us/g, "arse");
+    return resp;
+}
 
 // Pick a random fart description from the fart json file.
 

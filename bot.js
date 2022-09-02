@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 const WebSocketClient = require('websocket').client;
 const config = require('./config.json');
 
@@ -139,7 +140,7 @@ client.on('connect', function (connection) {
                                 if (parsedMessage.words.length > 1) {
                                     location = parsedMessage.words.slice(1).join(' ');
                                 }
-                                const req = new Request(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${config.OWM.api_key}`)
+                                const req = new Request(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${config.OWM.api_key}`);
                                 fetch(req)
                                     .then((response) => {
                                         if (!response.ok) {

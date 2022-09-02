@@ -248,7 +248,7 @@ function arsebot(inWords) {
             }
             i++;
         });
-        resp = respArr.join(' ');
+        resp = respArr.join(' ').replace(' a arse ', ' an arse ');
     }
     return resp;
 }

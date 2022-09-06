@@ -179,7 +179,7 @@ client.on('connect', function (connection) {
                                     'played fart reverb for 25 bits!' === parsedMessage.words.slice(1).join(' ').toLowerCase()
                                     || 'played fart for 25 bits!' === parsedMessage.words.slice(1).join(' ').toLowerCase()
                                 ) {
-                                    connection.sendUTF(`PRIVMSG ${channel} :Oh excuse you @${parsedMessage.source.nick}, that was ${randomFart()}!`);
+                                    connection.sendUTF(`PRIVMSG ${channel} :Oh excuse you @${parsedMessage.words[0]}, that was ${randomFart()}!`);
                                 }
 
                             }

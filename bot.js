@@ -135,15 +135,6 @@ client.on('connect', function (connection) {
                             else if (account.toLowerCase() === parsedMessage.words[0].toLowerCase()) {
                                 connection.sendUTF(`PRIVMSG ${channel} :${notificationMessage}`);
                             }
-                            else if (
-                                'played' === parsedMessage.words[1] &&
-                                'FART' === parsedMessage.words[2] &&
-                                'for' === parsedMessage.words[3] &&
-                                '25' === parsedMessage.words[4] &&
-                                'Bits' === parsedMessage.words[5]
-                            ) {
-                                connection.sendUTF(`PRIVMSG ${channel} :Oh excuse you @${parsedMessage.source.nick}, that was ${randomFart()}!`);
-                            }
                             else if ('lurk' === parsedMessage.command.botCommand 
                                 || 'brb' === parsedMessage.command.botCommand) {
                                 delay(1000).then(() => connection.sendUTF(`PRIVMSG ${channel} :Bye @${parsedMessage.source.nick} o/`));
@@ -187,6 +178,11 @@ client.on('connect', function (connection) {
                                 if (repl != parsedMessage.parameters) {
                                     connection.sendUTF(`PRIVMSG ${channel} :/me ${repl}`);
                                 }
+
+                                if ('played fart reverb for 25 bits!' === parsedMessage.words.slice(1).join(' ').toLowerCase()) {
+                                    connection.sendUTF(`PRIVMSG ${channel} :Oh excuse you @${parsedMessage.source.nick}, that was ${randomFart()}!`);
+                                }
+
                             }
 
                             break;

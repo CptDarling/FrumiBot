@@ -3,8 +3,6 @@
 const WebSocketClient = require('websocket').client;
 const config = require('./config.json');
 const fart = require('./farts.json');
-const ARSEBOT_TIMEOUT = 20;
-var arseBotTimeout = ARSEBOT_TIMEOUT;
 
 const client = new WebSocketClient();
 var channel = config.channel.name;
@@ -177,16 +175,6 @@ client.on('connect', function (connection) {
                             else {
                                 // console.log(`${JSON.stringify(parsedMessage)}`);
 
-                                // ArseBot
-                                var repl = arsebot([parsedMessage.parameters]);
-                                if (repl != parsedMessage.parameters) {
-                                    arseBotTimeout--;
-                                    if (arseBotTimeout <= 0) {
-                                        arseBotTimeout = ARSEBOT_TIMEOUT;
-                                        connection.sendUTF(`PRIVMSG ${channel} :/me ${repl}`);
-                                    }
-                                }
-
                                 if (
                                     'played fart reverb for 25 bits!' === parsedMessage.words.slice(1).join(' ').toLowerCase()
                                     || 'played fart for 25 bits!' === parsedMessage.words.slice(1).join(' ').toLowerCase()
@@ -237,28 +225,6 @@ client.on('connect', function (connection) {
 });
 
 client.connect('ws://irc-ws.chat.twitch.tv:80');
-
-// Implement arsebot
-
-function arsebot(inWords) {
-    var resp = inWords.toString().replace(/us/g, "arse");
-    var respArr = [];
-    if (resp !== inWords.toString()) {
-        var i = 0;
-        var arr = inWords.toString().split(' ');
-        // Which word was replaced?
-        resp.split(' ').forEach((w) => {
-            if (w === arr[i]) {
-                respArr.push(w);
-            } else {
-                respArr.push('arse');
-            }
-            i++;
-        });
-        resp = respArr.join(' ').replace(' a arse ', ' an arse ');
-    }
-    return resp;
-}
 
 // Pick a random fart description from the fart json file.
 

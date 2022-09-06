@@ -3,6 +3,8 @@
 const WebSocketClient = require('websocket').client;
 const config = require('./config.json');
 const fart = require('./farts.json');
+const ARSEBOT_TIMEOUT = 20;
+var arseBotTimeout = ARSEBOT_TIMEOUT;
 
 const client = new WebSocketClient();
 var channel = config.channel.name;
@@ -174,11 +176,17 @@ client.on('connect', function (connection) {
                             }
                             else {
                                 // console.log(`${JSON.stringify(parsedMessage)}`);
+
+                                // ArseBot
                                 var repl = arsebot([parsedMessage.parameters]);
                                 if (repl != parsedMessage.parameters) {
-                                    connection.sendUTF(`PRIVMSG ${channel} :/me ${repl}`);
+                                    arseBotTimeout--;
+                                    if (arseBotTimeout <= 0) {
+                                        arseBotTimeout = ARSEBOT_TIMEOUT;
+                                        connection.sendUTF(`PRIVMSG ${channel} :/me ${repl}`);
+                                    }
                                 }
-                                console.log(parsedMessage.words.slice(1).join(' ').toLowerCase());
+
                                 if (
                                     'played fart reverb for 25 bits!' === parsedMessage.words.slice(1).join(' ').toLowerCase()
                                     || 'played fart for 25 bits!' === parsedMessage.words.slice(1).join(' ').toLowerCase()

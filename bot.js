@@ -113,7 +113,7 @@ client.on('connect', function (connection) {
                                 connection.close();
                             }
                             else if ('toot' === parsedMessage.command.botCommand) {
-                                delay(1000).then(() => connection.sendUTF(`PRIVMSG ${channel} :!chair`));
+                                delay(1000).then(() => connection.sendUTF(`PRIVMSG ${channel} :${randomWord(['!chair', '!cloneswap'])}`));
                             }
                             else if ('hi' === parsedMessage.parameters.toLowerCase()
                                 || 'hello' === parsedMessage.parameters.toLowerCase()
@@ -135,7 +135,7 @@ client.on('connect', function (connection) {
                             else if (account.toLowerCase() === parsedMessage.words[0].toLowerCase()) {
                                 connection.sendUTF(`PRIVMSG ${channel} :${notificationMessage}`);
                             }
-                            else if ('lurk' === parsedMessage.command.botCommand 
+                            else if ('lurk' === parsedMessage.command.botCommand
                                 || 'brb' === parsedMessage.command.botCommand) {
                                 delay(1000).then(() => connection.sendUTF(`PRIVMSG ${channel} :Bye @${parsedMessage.source.nick} o/`));
                             }

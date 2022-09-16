@@ -3,9 +3,6 @@
         "name": "#<default channel name goes here>",
         "location": "<channel location goes here>"
     },
-    "account": {
-        "password": "oauth:<your access token goes here>"
-    },
     "OWM": {
         "api_key": "<OpenWeatherMap api key goes here>"
     }

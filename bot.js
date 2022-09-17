@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 const WebSocketClient = require('websocket').client;
-const token = require('./token.json');
 const config = require('./config.json');
 const fart = require('./farts.json');
+const token = require('./token')
 
 // Argument processing
 const vargs = require('yargs')
@@ -19,16 +19,22 @@ const vargs = require('yargs')
         default: 'Wrocław',
         type: 'string'
     })
+    .describe('t', 'Generate a new token from the current refresh token')
     .help()
     .argv;
 
 channel = `#${vargs.channel}`;
 console.log(`channel: ${channel}`);
 
+if (vargs.t) {
+    token.refresh();
+    return;
+}
+
 const client = new WebSocketClient();
 
 const account = 'FrumiBot';   // Replace with the account the bot runs as
-const password = `oauth:${token.access_token}`;
+const password = `oauth:${token.data.access_token}`;
 
 const moveMessage = 'Get up and move, your body will thank you!';
 // const defaultMoveInterval = 1000 * 60 * 1; // Set to 1 minute for testing.

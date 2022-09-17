@@ -24,4 +24,6 @@ Commands:
 
 Internal:
     ☐ Move parsedMessage to a class.
-    ☐ Refresh token. @started(22-09-17 07:22)
+
+Archive:
+  ✔ Refresh token. @started(22-09-17 07:22) @done(22-09-17 11:57) @lasted(4h35m4s) @project(Internal)

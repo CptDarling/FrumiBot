@@ -9,6 +9,7 @@
   "author": "Richard Holyoak",
   "license": "ISC",
   "dependencies": {
-    "websocket": "^1.0.34"
+    "websocket": "^1.0.34",
+    "yargs": "^17.5.1"
   }
 }

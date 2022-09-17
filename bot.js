@@ -5,12 +5,27 @@ const token = require('./token.json');
 const config = require('./config.json');
 const fart = require('./farts.json');
 
-const client = new WebSocketClient();
-var channel = config.channel.name;
-if (process.argv.length > 2) {
-    channel = `#${process.argv[2].toLowerCase()}`;
-}
+// Argument processing
+const vargs = require('yargs')
+    .option('c', {
+        alias: 'channel',
+        describe: 'Connect to the named channel',
+        default: 'frumious__bandersnatch',
+        type: 'string'
+    })
+    .option('l', {
+        alias: 'location',
+        describe: 'Location for weather reports',
+        default: 'Wrocław',
+        type: 'string'
+    })
+    .help()
+    .argv;
+
+channel = `#${vargs.channel}`;
 console.log(`channel: ${channel}`);
+
+const client = new WebSocketClient();
 
 const account = 'FrumiBot';   // Replace with the account the bot runs as
 const password = `oauth:${token.access_token}`;

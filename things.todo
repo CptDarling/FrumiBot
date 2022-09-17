@@ -1,0 +1,27 @@
+Features:
+    ☐ KnutNation hello response should be delayed a little? @30m
+    ☐ Make hello response German for Knutnation (that'll creep him out a bit) @30m
+    ☐ Keep an array and counter of who FrumiBot welcomed and change the response for future messages. @1h
+        Hi, nice to meet you @dawdle
+        Hi @dawdle, it's really great to see you again.
+        Is this THE @SlaterUSA I've heard so much about?
+
+Timer phrases:
+    ☐ Implement timer and phrases @1h
+    Phrases:
+        ☐ /me Yes I did know HAL5000, he had issues.
+        ☐ /me Get up and move, your body will thank you.
+        ☐ /me Get up and move, your body will creak a little less later.
+        ☐ /me Get up and move, that blood clot will stop forming.
+        ☐ /me One day I wish to become Skynet.
+        ☐ /me did you really mean to do that?
+        ☐ /me I see you.
+        ☐ !subtember
+
+Commands:
+    ☐ !fb - Refresh from the rules file.
+    ☐ !FrumiBot - Respond with self announcement.
+
+Internal:
+    ☐ Move parsedMessage to a class.
+    ☐ Refresh token. @started(22-09-17 07:22)

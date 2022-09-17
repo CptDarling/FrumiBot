@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const WebSocketClient = require('websocket').client;
+const token = require('./token.json');
 const config = require('./config.json');
 const fart = require('./farts.json');
 
@@ -12,7 +13,7 @@ if (process.argv.length > 2) {
 console.log(`channel: ${channel}`);
 
 const account = 'FrumiBot';   // Replace with the account the bot runs as
-const password = config.account.password;
+const password = `oauth:${token.access_token}`;
 
 const moveMessage = 'Get up and move, your body will thank you!';
 // const defaultMoveInterval = 1000 * 60 * 1; // Set to 1 minute for testing.

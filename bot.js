@@ -199,7 +199,8 @@ client.connect('ws://irc-ws.chat.twitch.tv:80');
 async function asyncCall(self, user, parameters, connection) {
     // console.log(`${JSON.stringify(parsedMessage)}`);
 
-    var msg = await modules.rules.processRules(self, user, parameters, vargs);
+    await modules.rules.processRules(self, user, parameters, vargs)
+        .then((msg) => {
     // console.log(`msg: ${msg}`);
     if (msg) {
         var send = `PRIVMSG ${channel} :${msg}`.supplant({
@@ -212,6 +213,7 @@ async function asyncCall(self, user, parameters, connection) {
             connection.sendUTF(send);
         }
     }
+        });
 }
 
 // To delay a function execution in JavaScript by 1 second, wrap a promise execution

@@ -9,25 +9,24 @@ var rules = {
     commands: []
 };
 
-getData();
+getData()
+    .then((state) => console.log('Rules loaded'))
+    .catch((e) => console.error(e));
 
 function getData() {
     return new Promise((resolve, reject) => {
     dataAvailable = false;
     fs.readFile('./rules.json', 'utf8', (err, data) => {
         if (err) {
-            console.error(err);
-            loop = false;
-                return reject(false);
+                return reject(err);
         }
             try {
                 dataAvailable = true;
-        console.log('Rules loaded');
             var r = JSON.parse(data);
             rules = r;
-                return resolve(true);
-        } catch (e) {
-            console.log(e);
+                return resolve();
+            } catch (err) {
+                return reject(err);
         }
     });
     })
@@ -61,13 +60,18 @@ exports.processRules = async function (self, username, parameters, vargs) {
 
                 switch (c) {
                     case 'refresh':
-                        if (await getData()) {
+                        await getData()
+                            .then(() => {
                             var msg = parameters.split(/\s+/).slice(1).join(' ');
                             r = r.supplant({
                                 echo: msg,
                             });
-                            console.log(`r: ${r}`);
-                        };
+                                console.log(`Refreshed: ${r}`);
+                            })
+                            .catch((e) => {
+                                r = null;
+                                console.error(e);
+                            });
 
                         break;
 

@@ -43,6 +43,6 @@ exports.getWeather = function (location, api_key) {
                         break;
                 }
             })
-            .catch((e) => console.log(e));
+            .catch((e) => console.error(e));
     })
 }

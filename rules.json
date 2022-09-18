@@ -92,6 +92,5 @@
             "pattern": "^!weather",
             "response": "/me Weather report for @{nick} in {city}, {country}: Temperature {celcius}°C ({fahrenheit}°F), humidity {humidity}% with {description}. Visibility is {visibility}km."
         }
-        }
     ]
 }

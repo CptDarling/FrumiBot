@@ -1,6 +1,7 @@
 const fs = require('fs');
 const { refresh } = require('../token');
 const config = require('../config.json');
+const { getWeather } = require('./weather');
 
 var dataAvailable = false;
 var rules = {
@@ -22,8 +23,6 @@ function getData() {
             try {
                 dataAvailable = true;
         console.log('Rules loaded');
-        dataAvailable = true;
-        try {
             var r = JSON.parse(data);
             rules = r;
                 return resolve(true);
@@ -79,8 +78,23 @@ exports.processRules = async function (self, username, parameters, vargs) {
 
                         break;
 
-                case 'refresh':
-                    getData();
+                    case 'weather':
+                        var location = parameters.split(/\s+/).slice(1).join(' ');
+                        if (!location) {
+                            location = vargs.location;
+                        }
+                        var data = await getWeather(location, config.OWM.api_key);
+                        if (data) {
+                            r = r.supplant({
+                                celcius: data.celcius,
+                                fahrenheit: data.fahrenheit,
+                                humidity: data.humidity,
+                                description: data.description,
+                                city: data.city,
+                                country: data.country,
+                                visibility: data.visibility,
+                            })
+                        }
 
                         break;
 

@@ -153,7 +153,7 @@ client.on('connect', function (connection) {
                             // }
                             else {
 
-                                asyncCall(account, parsedMessage, connection);
+                                asyncCall(parsedMessage.source.nick, account, parsedMessage.parameters, connection);
 
                             }
 
@@ -199,16 +199,14 @@ client.on('connect', function (connection) {
 
 client.connect('ws://irc-ws.chat.twitch.tv:80');
 
-async function asyncCall(self, parsedMessage, connection) {
-    console.log(`${JSON.stringify(parsedMessage)}`);
+async function asyncCall(self, user, parameters, connection) {
+    // console.log(`${JSON.stringify(parsedMessage)}`);
 
-    var username = parsedMessage.source.nick;
-
-    var msg = await modules.rules.processRules(self, username, parsedMessage.parameters, vargs);
+    var msg = await modules.rules.processRules(self, user, parameters, vargs);
     // console.log(`msg: ${msg}`);
     if (msg) {
         var send = `PRIVMSG ${channel} :${msg}`.supplant({
-            nick: username,
+            nick: user,
             self: self,
             welcome: notificationMessage
         });

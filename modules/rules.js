@@ -2,14 +2,16 @@ const fs = require('fs');
 const { refresh } = require('../token');
 const config = require('../config.json');
 const { getWeather } = require('./weather');
+const timers = require('./timers');
 
 var dataAvailable = false;
 var rules = {
     patterns: [],
+    timers: [],
     commands: []
 };
 
-getData();
+getData().then((state) => { if (state) timers.loadTimers(rules.timers); });
 
 function getData() {
     return new Promise((resolve, reject) => {
@@ -66,8 +68,9 @@ exports.processRules = async function (self, username, parameters, vargs) {
                             r = r.supplant({
                                 echo: msg,
                             });
-                            console.log(`r: ${r}`);
-                        };
+
+                    case 'timers':
+                        timers.loadTimers(rules.timers);
 
                         break;
 

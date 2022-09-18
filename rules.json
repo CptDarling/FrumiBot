@@ -81,6 +81,12 @@
             "response": "/me {echo}"
         },
         {
+            "title": "Refresh Timers",
+            "command": "timers",
+            "pattern": "^!lt\\b",
+            "response": "/me {echo}"
+        },
+        {
             "title": "Dice Roll",
             "command": "dice",
             "pattern": "^!dice$|^!dice [0-9]+$",
@@ -92,6 +98,14 @@
             "pattern": "^!weather",
             "response": "/me Weather report for @{nick} in {city}, {country}: Temperature {celcius}°C ({fahrenheit}°F), humidity {humidity}% with {description}. Visibility is {visibility}km."
         }
+    ],
+    "timers": [
+        {
+            "title": "test",
+            "name": "move",
+            "seconds": 60,
+            "random": 10,
+            "response": "Get up and move, your body will thank you for it."
         }
     ]
 }

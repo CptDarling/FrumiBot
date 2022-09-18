@@ -9,38 +9,40 @@ exports.getWeather = function (location, api_key) {
             .then((res) => {
                 if (!res.ok) {
                     console.log(`HTTP error: ${res.status}`);
-                    return `Stop trying to trick me, there is no weather in ${location}!`;
+                    return reject(res.status);
                     // throw new Error(`HTTP error: ${res.status}`);
                 }
                 return res.json();
             })
             .then((json) => {
                 // console.log(`DATA: ${JSON.stringify(json, null, 2)}`);
-                console.log(`CODE: ${JSON.stringify(json['cod'], null, 2)}`);
-                switch (json['cod']) {
-                    case 404:
-                        return reject(`OWM Error ${json['message']}`);
+                if (json) {
+                    console.log(`CODE: ${JSON.stringify(json['cod'], null, 2)}`);
+                    switch (json['cod']) {
+                        case 404:
+                            return reject(`OWM Error ${json['message']}`);
 
-                        break;
+                            break;
 
-                    case 200:
-                        var c = parseFloat(json['main']['temp'] - 273.15);
-                        var resp = {
-                            celcius: parseFloat(c.toFixed(1)),
-                            fahrenheit: parseFloat((c * 1.8 + 32).toFixed(1)),
-                            humidity: parseFloat(json['main']['humidity']),
-                            city: json['name'],
-                            country: json['sys']['country'],
-                            description: json['weather'][0]['description'],
-                            visibility: parseFloat(parseFloat(json['visibility'] / 1000.0).toFixed(1)),
-                        }
-                        console.log(`RESP: ${JSON.stringify(resp, null, 2)}`);
-                        return resolve(resp);
+                        case 200:
+                            var c = parseFloat(json['main']['temp'] - 273.15);
+                            var resp = {
+                                celcius: parseFloat(c.toFixed(1)),
+                                fahrenheit: parseFloat((c * 1.8 + 32).toFixed(1)),
+                                humidity: parseFloat(json['main']['humidity']),
+                                city: json['name'],
+                                country: json['sys']['country'],
+                                description: json['weather'][0]['description'],
+                                visibility: parseFloat(parseFloat(json['visibility'] / 1000.0).toFixed(1)),
+                            }
+                            // console.log(`RESP: ${JSON.stringify(resp, null, 2)}`);
+                            return resolve(resp);
 
-                        break;
+                            break;
 
-                    default:
-                        break;
+                        default:
+                            break;
+                    }
                 }
             })
             .catch((e) => console.error(e));

@@ -2,6 +2,7 @@ const fs = require('fs');
 const { refresh } = require('../token');
 const config = require('../config.json');
 const { getWeather } = require('./weather');
+const { resolve } = require('path');
 
 var dataAvailable = false;
 var rules = {
@@ -15,135 +16,166 @@ getData()
 
 function getData() {
     return new Promise((resolve, reject) => {
-    dataAvailable = false;
-    fs.readFile('./rules.json', 'utf8', (err, data) => {
-        if (err) {
+        dataAvailable = false;
+        fs.readFile('./rules.json', 'utf8', (err, data) => {
+            if (err) {
                 return reject(err);
-        }
+            }
             try {
                 dataAvailable = true;
-            var r = JSON.parse(data);
-            rules = r;
+                var r = JSON.parse(data);
+                rules = r;
                 return resolve();
             } catch (err) {
                 return reject(err);
-        }
-    });
+            }
+        });
     })
 }
 
 exports.processRules = async function (self, username, parameters, vargs) {
 
-    if (!dataAvailable) return;
+    return new Promise((resolve, reject) => {
 
-    var resp = null;
-    var found = false;
-    var title;
+        if (!dataAvailable) return reject("No data loaded");
 
-    // Commands
-    if (!resp) {
-        for (var attr in rules.commands) {
-            var c = rules.commands[attr].command;
-            var p = rules.commands[attr].pattern.supplant({
-                self: self
-            });
-            var r = rules.commands[attr].response;
-            const re = new RegExp(p);
+        var resp = null;
+        var found = false;
+        var title;
 
-            found = re.test(parameters.toString());
-            if (found) {
+        // Commands
+        if (!resp) {
+            for (var attr in rules.commands) {
+                var c = rules.commands[attr].command;
+                var p = rules.commands[attr].pattern.supplant({
+                    self: self
+                });
+                var r = rules.commands[attr].response;
+                var rej = rules.commands[attr].reject;
+                
+                const re = new RegExp(p);
 
-                // If the response is an array then pick one of the entries.
-                if (Object.prototype.toString.call(r) == '[object Array]') {
-                    r = r[Math.floor(Math.random() * r.length)];
-                }
+                found = re.test(parameters.toString());
+                if (found) {
 
-                switch (c) {
-                    case 'refresh':
-                        await getData()
-                            .then(() => {
-                            var msg = parameters.split(/\s+/).slice(1).join(' ');
+                    // If the response is an array then pick one of the entries.
+                    if (Object.prototype.toString.call(r) == '[object Array]') {
+                        r = r[Math.floor(Math.random() * r.length)];
+                    }
+
+                    // If the reject is an array then pick one of the entries.
+                    if (Object.prototype.toString.call(rej) == '[object Array]') {
+                        rej = rej[Math.floor(Math.random() * rej.length)];
+                    }
+
+                    switch (c) {
+                        case 'refresh':
+                            var x = r;
+                            getData()
+                                .then(() => {
+                                    var msg = parameters.split(/\s+/).slice(1).join(' ');
+                                    msg = x.supplant({
+                                        echo: msg,
+                                    });
+                                    return resolve(msg);
+                                })
+                                .catch((e) => {
+                                    r = null;
+                                    console.error(e);
+                                    return reject();
+                                });
+
+                            break;
+
+                        case 'dice':
                             r = r.supplant({
-                                echo: msg,
+                                dice: rollDice(parameters.split(/\s+/)[1]),
                             });
-                                console.log(`Refreshed: ${r}`);
-                            })
-                            .catch((e) => {
-                                r = null;
-                                console.error(e);
-                            });
+                            return resolve(r);
 
-                        break;
+                            break;
 
-                    case 'dice':
+                        case 'weather':
+                            var location = parameters.split(/\s+/).slice(1).join(' ');
+                            if (!location) {
+                                location = vargs.location;
+                            }
+                            getWeather(location, config.OWM.api_key)
+                                .then((data) => {
+                                    r = r.supplant({
+                                        celcius: data.celcius,
+                                        fahrenheit: data.fahrenheit,
+                                        humidity: data.humidity,
+                                        description: data.description,
+                                        city: data.city,
+                                        country: data.country,
+                                        visibility: data.visibility,
+                                    })
+                                    // console.log(`DATA: ${JSON.stringify(data, null, 2)}`);
+                                    // console.log(`r: ${r}`);
+                                    return resolve(r);
+                                })
+                                .catch((e) => {
+                                    switch (e) {
+                                        case 404:
+                                            var resp = rej.supplant({
+                                                location: location
+                                            })
+                                            return resolve(resp);
+
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                });
+
+                            break;
+
+                        default:
+                            break;
+                    }
+                    resp = r;
+                    console.log(`Ran command: '${rules.commands[attr].title}'`);
+                }
+            }
+        }
+
+        // Simple string patterns
+        if (!resp) {
+            for (var attr in rules.patterns) {
+                title = rules.patterns[attr].title;
+                var p = rules.patterns[attr].pattern.supplant({
+                    self: self
+                });
+                var r = rules.patterns[attr].response;
+                var c = rules.patterns[attr].choices;
+
+                const re = new RegExp(p, 'i');
+
+                found = re.test(parameters.toString());
+                if (found) {
+                    // If the response is an array then pick one of the entries.
+                    if (Object.prototype.toString.call(r) == '[object Array]') {
+                        r = r[Math.floor(Math.random() * r.length)];
+                    }
+                    // Pick a choice if there are any.
+                    if (Object.prototype.toString.call(c) == '[object Array]') {
                         r = r.supplant({
-                            dice: rollDice(parameters.split(/\s+/)[1]),
+                            choose: c[Math.floor(Math.random() * c.length)]
                         });
-
-                        break;
-
-                    case 'weather':
-                        var location = parameters.split(/\s+/).slice(1).join(' ');
-                        if (!location) {
-                            location = vargs.location;
-                        }
-                        var data = await getWeather(location, config.OWM.api_key);
-                        if (data) {
-                            r = r.supplant({
-                                celcius: data.celcius,
-                                fahrenheit: data.fahrenheit,
-                                humidity: data.humidity,
-                                description: data.description,
-                                city: data.city,
-                                country: data.country,
-                                visibility: data.visibility,
-                            })
-                        }
-
-                        break;
-
-                    default:
-                        break;
+                    }
+                    resp = r;
+                    console.log(`Ran response: '${rules.patterns[attr].title}'`);
+                    return resolve(r);
                 }
-                resp = r;
-                console.log(`Ran command: '${rules.commands[attr].title}'`);
             }
         }
-    }
 
-    // Simple string patterns
-    if (!resp) {
-        for (var attr in rules.patterns) {
-            title = rules.patterns[attr].title;
-            var p = rules.patterns[attr].pattern.supplant({
-                self: self
-            });
-            var r = rules.patterns[attr].response;
-            var c = rules.patterns[attr].choices;
-
-            const re = new RegExp(p, 'i');
-
-            found = re.test(parameters.toString());
-            if (found) {
-                // If the response is an array then pick one of the entries.
-                if (Object.prototype.toString.call(r) == '[object Array]') {
-                    r = r[Math.floor(Math.random() * r.length)];
-                }
-                // Pick a choice if there are any.
-                if (Object.prototype.toString.call(c) == '[object Array]') {
-                    r = r.supplant({
-                        choose: c[Math.floor(Math.random() * c.length)]
-                    });
-                }
-                resp = r;
-                console.log(`Ran response: '${rules.patterns[attr].title}'`);
-            }
-        }
-    }
-
-    if (resp) {
-        return resp;
-    }
+        // if (resp) {
+        //     return resolve(resp);
+        // }
+    })
 
 }
 

@@ -150,7 +150,7 @@ client.on('connect', function (connection) {
                             // }
                             else {
 
-                                asyncCall(parsedMessage.source.nick, account, parsedMessage.parameters, connection);
+                                asyncCall(account, parsedMessage.source.nick, parsedMessage.parameters, connection);
 
                             }
 
@@ -213,7 +213,8 @@ async function asyncCall(self, user, parameters, connection) {
             connection.sendUTF(send);
         }
     }
-        });
+        })
+        .catch((e) => console.error(e));
 }
 
 // To delay a function execution in JavaScript by 1 second, wrap a promise execution

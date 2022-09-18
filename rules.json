@@ -90,7 +90,10 @@
             "title": "Weather Report",
             "command": "weather",
             "pattern": "^!weather",
-            "response": "/me Weather report for @{nick} in {city}, {country}: Temperature {celcius}°C ({fahrenheit}°F), humidity {humidity}% with {description}. Visibility is {visibility}km."
+            "response": "/me Weather report for @{nick} in {city}, {country}: Temperature {celcius}°C ({fahrenheit}°F), humidity {humidity}% with {description}. Visibility is {visibility}km.",
+            "reject": [
+                "Stop trying to trick me @{nick}, {location} cannot have weather!"
+            ]
         }
     ]
 }

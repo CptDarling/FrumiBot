@@ -115,6 +115,7 @@ exports.processRules = async function (self, username, parameters, vargs) {
                 self: self
             });
             var r = rules.patterns[attr].response;
+            var c = rules.patterns[attr].choices;
 
             const re = new RegExp(p, 'i');
 
@@ -123,6 +124,12 @@ exports.processRules = async function (self, username, parameters, vargs) {
                 // If the response is an array then pick one of the entries.
                 if (Object.prototype.toString.call(r) == '[object Array]') {
                     r = r[Math.floor(Math.random() * r.length)];
+                }
+                // Pick a choice if there are any.
+                if (Object.prototype.toString.call(c) == '[object Array]') {
+                    r = r.supplant({
+                        choose: c[Math.floor(Math.random() * c.length)]
+                    });
                 }
                 resp = r;
                 console.log(`Ran response: '${rules.patterns[attr].title}'`);
@@ -133,6 +140,7 @@ exports.processRules = async function (self, username, parameters, vargs) {
     if (resp) {
         return resp;
     }
+
 }
 
 function rollDice(sides = 6) {

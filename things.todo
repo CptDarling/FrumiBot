@@ -6,7 +6,6 @@ Features:
         Hi @dawdle, it's really great to see you again.
         Is this THE @SlaterUSA I've heard so much about?
     ☐ Add timers
-    ☐ Add fart responses
 
 Timer phrases:
     ☐ Implement timer and phrases @1h
@@ -24,6 +23,7 @@ Internal:
     ☐ Make non blocking calls to the rules processor.
 
 Archive:
+  ✔ Add fart responses @started(22-09-18 13:50) @done(22-09-18 14:04) @lasted(14m24s) @project(Features)
   ✔ Add {echo} response @done(22-09-18 13:45) @project(Features)
   ✔ !fb - Refresh from the rules file. @done(22-09-18 12:19) @project(Commands)
   ✔ !FrumiBot - Respond with self announcement. @done(22-09-18 12:19) @project(Commands)

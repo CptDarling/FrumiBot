@@ -2,9 +2,6 @@
 
 const WebSocketClient = require('websocket').client;
 const config = require('./config.json');
-// const fart = require('./farts.json');
-// const rules = require('./modules/rules');
-// const weather = require('.//modules//weather.js');
 var modules = require("./modules");
 const token = require('./token')
 
@@ -208,7 +205,8 @@ async function asyncCall(self, user, parameters, connection) {
         var send = `PRIVMSG ${channel} :${msg}`.supplant({
             nick: user,
             self: self,
-            welcome: notificationMessage
+            welcome: notificationMessage,
+            0: parameters.split(/\s+/).shift()
         });
         if (send) {
             connection.sendUTF(send);

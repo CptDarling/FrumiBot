@@ -2,7 +2,10 @@
 
 const WebSocketClient = require('websocket').client;
 const config = require('./config.json');
-const fart = require('./farts.json');
+// const fart = require('./farts.json');
+// const rules = require('./modules/rules');
+// const weather = require('.//modules//weather.js');
+var modules = require("./modules");
 const token = require('./token')
 
 // Argument processing
@@ -23,6 +26,16 @@ const vargs = require('yargs')
     .help()
     .argv;
 
+
+String.prototype.supplant = function (o) {
+    return this.replace(/{([^{}]*)}/g,
+        function (a, b) {
+            var r = o[b];
+            return typeof r === 'string' || typeof r === 'number' ? r : a;
+        }
+    );
+};
+
 channel = `#${vargs.channel}`;
 console.log(`channel: ${channel}`);
 
@@ -41,7 +54,8 @@ const moveMessage = 'Get up and move, your body will thank you!';
 const defaultMoveInterval = 1000 * 60 * 40;
 let moveInterval = defaultMoveInterval;
 
-const notificationMessage = `/me Hi, I'm ${account}, please say hi and ask me about !dice or !weather`;
+const notificationMessage = "/me Hi, I'm {self}. Please say hi and ask me about !dice or !weather".supplant({ self: account });
+
 // const notificationInterval = 1000 * 60 * 1;
 const notificationInterval = 1000 * 60 * 60;
 
@@ -91,7 +105,7 @@ client.on('connect', function (connection) {
     connection.on('message', function (ircMessage) {
         if (ircMessage.type === 'utf8') {
             let rawIrcMessage = ircMessage.utf8Data.trimEnd();
-            console.log(`Message received (${new Date().toISOString()}): '${rawIrcMessage}'\n`);
+            console.log(`Message received (${new Date().toISOString()}): '${rawIrcMessage}'`);
 
             let messages = rawIrcMessage.split('\r\n');  // The IRC message may contain one or more messages.
             messages.forEach(message => {
@@ -134,75 +148,12 @@ client.on('connect', function (connection) {
                                 connection.sendUTF(`PART ${channel}`);
                                 connection.close();
                             }
-                            else if ('toot' === parsedMessage.command.botCommand) {
-                                delay(1000).then(() => connection.sendUTF(`PRIVMSG ${channel} :${randomWord(['!chair', '!cloneswap'])}`));
-                            }
-                            else if ('hi' === parsedMessage.parameters.toLowerCase()
-                                || 'hello' === parsedMessage.parameters.toLowerCase()
-                                || 'hello!' === parsedMessage.parameters.toLowerCase()
-                                || 'hello' === parsedMessage.command.botCommand) {
-                                connection.sendUTF(`PRIVMSG ${channel} :Hi, nice to meet you @${parsedMessage.source.nick}`);
-                            }
-                            else if ('g2g' === parsedMessage.parameters.toLowerCase()
-                                || 'got to go' === parsedMessage.parameters.toLowerCase()) {
-                                connection.sendUTF(`PRIVMSG ${channel} :Bye @${parsedMessage.source.nick}, see you later!`);
-                            }
-                            else if ('dice' === parsedMessage.command.botCommand) {
-                                var sides = 6;
-                                if (parsedMessage.words.length > 1) {
-                                    sides = parsedMessage.words[1];
-                                }
-                                connection.sendUTF(`PRIVMSG ${channel} :You rolled ${Math.floor(Math.random() * sides) + 1}`);
-                            }
-                            else if (account.toLowerCase() === parsedMessage.words[0].toLowerCase()) {
-                                connection.sendUTF(`PRIVMSG ${channel} :${notificationMessage}`);
-                            }
-                            else if ('lurk' === parsedMessage.command.botCommand
-                                || 'brb' === parsedMessage.command.botCommand) {
-                                delay(1000).then(() => connection.sendUTF(`PRIVMSG ${channel} :Bye @${parsedMessage.source.nick} o/`));
-                            }
-                            else if ('weather' === parsedMessage.command.botCommand) {
-                                // console.log(`${JSON.stringify(parsedMessage)}`);
-                                var location = config.channel.location;
-                                if (parsedMessage.words.length > 1) {
-                                    location = parsedMessage.words.slice(1).join(' ');
-                                }
-                                const req = new Request(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${config.OWM.api_key}`);
-                                fetch(req)
-                                    .then((response) => {
-                                        if (!response.ok) {
-                                            // connection.sendUTF(`PRIVMSG ${channel} :Yes, there is.`);
-                                            connection.sendUTF(`PRIVMSG ${channel} :Stop trying to trick me, there is no weather in ${location}!`);
-                                            // throw new Error(`HTTP error: ${response.status}`);
-                                        }
-                                        return response.json();
-                                    })
-                                    .then((data) => {
-                                        console.log(data);
-                                        if (data['cod'] == '404') {
-                                            connection.sendUTF(`OWM Error $data['message']`);
-                                        } else if (data['cod'] == '200') {
-                                            celcius = (parseFloat(data['main']['temp']) - 273.15).toFixed(1);
-                                            fahrenheit = (celcius * 1.8 + 32).toFixed(1);
-                                            humidity = (parseFloat(data['main']['humidity'])).toFixed(1);
-                                            city = data['name'];
-                                            country = data['sys']['country'];
-                                            description = data['weather'][0]['description'];
-                                            visibility = (parseFloat(data['visibility']) / 1000.0).toFixed(1);
-                                            connection.sendUTF(`PRIVMSG ${channel} :${celcius}°C/${fahrenheit}°F, ${humidity}% humidity, with ${description} in ${city}, ${country}. Visibility is ${visibility}km`);
-                                        }
-                                    })
-                                    .catch((error) => console.log(`${error}`));
-                            }
+                            // else if ('colour' === parsedMessage.command.botCommand) {
+                            //     const req = new Request(`https://api.twitch.tv/helix/chat/color`);
+                            // }
                             else {
-                                // console.log(`${JSON.stringify(parsedMessage)}`);
 
-                                if (
-                                    'played fart reverb for 25 bits!' === parsedMessage.words.slice(1).join(' ').toLowerCase()
-                                    || 'played fart for 25 bits!' === parsedMessage.words.slice(1).join(' ').toLowerCase()
-                                ) {
-                                    connection.sendUTF(`PRIVMSG ${channel} :Oh excuse you @${parsedMessage.words[0]}, that was ${randomFart()}!`);
-                                }
+                                asyncCall(account, parsedMessage, connection);
 
                             }
 
@@ -248,16 +199,23 @@ client.on('connect', function (connection) {
 
 client.connect('ws://irc-ws.chat.twitch.tv:80');
 
-// Pick a random fart description from the fart json file.
+async function asyncCall(self, parsedMessage, connection) {
+    console.log(`${JSON.stringify(parsedMessage)}`);
 
-function randomFart() {
-    return randomWord(fart.farts);
-}
+    var username = parsedMessage.source.nick;
 
-// Pick a random word from the array.
-
-function randomWord(arr) {
-    return arr[Math.floor(Math.random() * arr.length)];
+    var msg = await modules.rules.processRules(self, username, parsedMessage.parameters, vargs);
+    // console.log(`msg: ${msg}`);
+    if (msg) {
+        var send = `PRIVMSG ${channel} :${msg}`.supplant({
+            nick: username,
+            self: self,
+            welcome: notificationMessage
+        });
+        if (send) {
+            connection.sendUTF(send);
+        }
+    }
 }
 
 // To delay a function execution in JavaScript by 1 second, wrap a promise execution
@@ -280,8 +238,7 @@ function parseMessage(message) {
         tags: null,
         source: null,
         command: null,
-        parameters: null,
-        words: null
+        parameters: null
     };
 
     // The start index. Increments as we parse the IRC message.
@@ -347,7 +304,7 @@ function parseMessage(message) {
         parsedMessage.source = parseSource(rawSourceComponent);
 
         parsedMessage.parameters = rawParametersComponent;
-        if (parsedMessage.parameters) parsedMessage.words = parsedMessage.parameters.split(' ');
+
         if (rawParametersComponent && rawParametersComponent[0] === '!') {
             // The user entered a bot command in the chat window.            
             parsedMessage.command = parseParameters(rawParametersComponent, parsedMessage.command);

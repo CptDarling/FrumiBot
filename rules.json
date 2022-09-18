@@ -1,0 +1,61 @@
+{
+    "patterns": [
+        {
+            "title": "Perk Up",
+            "pattern": "^[@]*{self}\\b",
+            "response": "{welcome}"
+        },
+        {
+            "title": "Absence",
+            "pattern": "^brb\\b|^!lurk\\b",
+            "response": "Bye @{nick} o/"
+        },
+        {
+            "title": "Leaving",
+            "pattern": "\\bg[t2]g\\b",
+            "response": [
+                "Bye @{nick}, come again o/",
+                "Bye @{nick}, see you later"
+            ]
+        },
+        {
+            "title": "Hello",
+            "pattern": "^(hi|hello)$",
+            "response": [
+                "Hi, nice to meet you @{nick}",
+                "Hi @{nick} it is a pleasure to welcome you",
+                "Hi @{nick} nice to see you here. Pull up a seat and enjoy the show."
+            ]
+        },
+        {
+            "title": "Personal Hello",
+            "pattern": "^(hi|hello) [@]*{self}",
+            "response": "/me Hi @{nick} it's a pleasure to meet you and thanks for saying hi to me."
+        },
+        {
+            "title": "Toilet Break",
+            "pattern": "^!toot\\b",
+            "response": [
+                "!chair",
+                "!cloneswap"
+            ]
+        }
+    ],
+    "commands": [
+        {
+            "title": "Refresh from Rules File",
+            "command": "refresh",
+            "pattern": "^!fb\\b",
+        },
+        {
+            "title": "Dice Roll",
+            "command": "dice",
+            "pattern": "^!dice$|^!dice [0-9]+$",
+            "response": "@{nick} rolled {dice}"
+        },
+        {
+            "name": "refresh",
+            "pattern": "^!fb"
+        }
+    ]
+}

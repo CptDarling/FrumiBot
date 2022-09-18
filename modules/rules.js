@@ -11,22 +11,27 @@ var rules = {
 getData();
 
 function getData() {
+    return new Promise((resolve, reject) => {
     dataAvailable = false;
     fs.readFile('./rules.json', 'utf8', (err, data) => {
         if (err) {
             console.error(err);
             loop = false;
-            return;
+                return reject(false);
         }
+            try {
+                dataAvailable = true;
         console.log('Rules loaded');
         dataAvailable = true;
         try {
             var r = JSON.parse(data);
             rules = r;
+                return resolve(true);
         } catch (e) {
             console.log(e);
         }
     });
+    })
 }
 
 exports.processRules = async function (self, username, parameters, vargs) {
@@ -57,7 +62,13 @@ exports.processRules = async function (self, username, parameters, vargs) {
 
                 switch (c) {
                     case 'refresh':
-                        getData();
+                        if (await getData()) {
+                            var msg = parameters.split(/\s+/).slice(1).join(' ');
+                            r = r.supplant({
+                                echo: msg,
+                            });
+                            console.log(`r: ${r}`);
+                        };
 
                         break;
 

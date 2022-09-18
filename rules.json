@@ -46,6 +46,7 @@
             "title": "Refresh from Rules File",
             "command": "refresh",
             "pattern": "^!fb\\b",
+            "response": "/me {echo}"
         },
         {
             "title": "Dice Roll",

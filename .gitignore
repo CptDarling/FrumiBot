@@ -105,3 +105,5 @@ dist
 
 # Manually added
 .vs/
+config.json
+token.json

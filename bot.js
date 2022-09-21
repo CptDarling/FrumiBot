@@ -3,7 +3,7 @@
 const WebSocketClient = require('websocket').client;
 const config = require('./config.json');
 var modules = require("./modules");
-const token = require('./token')
+const token = require('./token');
 
 // Argument processing
 const vargs = require('yargs')
@@ -51,7 +51,7 @@ const moveMessage = 'Get up and move, your body will thank you!';
 const defaultMoveInterval = 1000 * 60 * 40;
 let moveInterval = defaultMoveInterval;
 
-const notificationMessage = "/me Hi, I'm {self}. Please say hi and ask me about !dice or !weather".supplant({ self: account });
+const notificationMessage = "/me Hi, I'm {self}. Please say hi and ask me about !dice, !quote or !weather".supplant({ self: account });
 
 // const notificationInterval = 1000 * 60 * 1;
 const notificationInterval = 1000 * 60 * 60;

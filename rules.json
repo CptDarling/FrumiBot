@@ -29,7 +29,7 @@
         },
         {
             "title": "Personal Hello",
-            "pattern": "^(hi|hello) [@]*{self}",
+            "pattern": "^(hi|hello|hey|hallo) [@]*{self}",
             "response": "/me Hi @{nick} it's a pleasure to meet you and thanks for saying hi to me."
         },
         {

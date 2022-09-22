@@ -83,8 +83,8 @@
         {
             "title": "Dice Roll",
             "command": "dice",
-            "pattern": "^!dice$|^!dice [0-9]+$",
-            "response": "@{nick} rolled {dice}"
+            "pattern": "^!dice$|^!dice [0-9d0-9]+$",
+            "response": "@{nick} {dice}"
         },
         {
             "title": "Weather Report",

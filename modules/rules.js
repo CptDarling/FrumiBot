@@ -3,6 +3,7 @@ const { refresh } = require('../token');
 const config = require('../config.json');
 const { getWeather } = require('./weather');
 const { resolve } = require('path');
+const { diceRoll } = require('./dice');
 
 var dataAvailable = false;
 var rules = {
@@ -89,7 +90,7 @@ exports.processRules = async function (self, username, parameters, vargs) {
 
                         case 'dice':
                             r = r.supplant({
-                                dice: rollDice(parameters.split(/\s+/)[1]),
+                                dice: diceRoll(parameters.split(/\s+/)[1]),
                             });
                             return resolve(r);
 
@@ -177,8 +178,4 @@ exports.processRules = async function (self, username, parameters, vargs) {
         // }
     })
 
-}
-
-function rollDice(sides = 6) {
-    return Math.floor(Math.random() * sides) + 1;
 }

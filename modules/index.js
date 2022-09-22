@@ -1,2 +1,2 @@
-// exports.weather = require('./weather.js');
 exports.rules = require('./rules.js');
+exports.dice  = require('./dice.js');

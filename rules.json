@@ -71,13 +71,6 @@
                 "an orange banana",
                 "a bronx cheer"
             ]
-        },
-        {
-            "title": "Quote",
-            "pattern": "^!quote\\b",
-            "response": [
-                "/me \"IMO, the priority should always be to optimize for happiness. Whatever that entails.\" cryptocod3"
-            ]
         }
     ],
     "commands": [

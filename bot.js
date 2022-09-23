@@ -51,7 +51,7 @@ const moveMessage = 'Get up and move, your body will thank you!';
 const defaultMoveInterval = 1000 * 60 * 40;
 let moveInterval = defaultMoveInterval;
 
-const notificationMessage = "/me Hello, I'm {self}. Please say hi and ask me about !dice (!dice <number>|!dice <dies>d<sides>) or !weather (!weather <location>)".supplant({ self: account });
+const notificationMessage = "/me Hello, I'm {self}. Please say hi and ask me about !dice [<number>|<dies>d<sides>] or !weather [<location>]".supplant({ self: account });
 
 // const notificationInterval = 1000 * 60 * 1;
 const notificationInterval = 1000 * 60 * 60;

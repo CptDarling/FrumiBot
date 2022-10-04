@@ -20,7 +20,7 @@
         },
         {
             "title": "Hello",
-            "pattern": "^(hi|hello)$",
+            "pattern": "^(hi|hello|hallo|hello)!*$",
             "response": [
                 "Hi, nice to meet you @{nick}",
                 "Hi @{nick} it is a pleasure to welcome you",

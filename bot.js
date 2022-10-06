@@ -200,18 +200,27 @@ async function asyncCall(self, user, parameters, connection) {
     // console.log(`${JSON.stringify(parsedMessage)}`);
 
     await modules.rules.processRules(self, user, parameters, vargs)
-        .then((msg) => {
-    // console.log(`msg: ${msg}`);
-    if (msg) {
-        var send = `PRIVMSG ${channel} :${msg}`.supplant({
+        .then((resp) => {
+            // console.log(msg);
+            var m = resp[0];
+            var d = resp[1];
+            var t = resp[2];
+            var n = resp[3];
+            if (m) {
+                var send = `PRIVMSG ${channel} :${m}`.supplant({
             nick: user,
             self: self,
             welcome: notificationMessage,
             0: parameters.split(/\s+/).shift()
         });
         if (send) {
+                    if (d > 0) {
+                        delay(d).then(() => connection.sendUTF(send));
+                    } else {
             connection.sendUTF(send);
         }
+                    console.log(`Ran ${t}: ${n}`);
+                }
     }
         })
         .catch((e) => console.error(e));

@@ -35,6 +35,7 @@
         {
             "title": "Toilet Break",
             "pattern": "^!toot\\b",
+            "delay": 1,
             "response": [
                 "!chair",
                 "!cloneswap"

@@ -53,7 +53,7 @@ exports.processRules = async function (self, username, parameters, vargs) {
                 });
                 var r = rules.commands[attr].response;
                 var rej = rules.commands[attr].reject;
-                
+
                 const re = new RegExp(p);
 
                 found = re.test(parameters.toString());
@@ -78,7 +78,7 @@ exports.processRules = async function (self, username, parameters, vargs) {
                                     msg = x.supplant({
                                         echo: msg,
                                     });
-                                    return resolve(msg);
+                                    return resolve([r, 0, 'command', rules.commands[attr].title]);
                                 })
                                 .catch((e) => {
                                     r = null;
@@ -92,7 +92,7 @@ exports.processRules = async function (self, username, parameters, vargs) {
                             r = r.supplant({
                                 dice: diceRoll(parameters.split(/\s+/)[1]),
                             });
-                            return resolve(r);
+                            return resolve([r, 0, 'command', rules.commands[attr].title]);
 
                             break;
 
@@ -114,7 +114,7 @@ exports.processRules = async function (self, username, parameters, vargs) {
                                     })
                                     // console.log(`DATA: ${JSON.stringify(data, null, 2)}`);
                                     // console.log(`r: ${r}`);
-                                    return resolve(r);
+                                    return resolve([r, 0, 'command', rules.commands[attr].title]);
                                 })
                                 .catch((e) => {
                                     switch (e) {
@@ -122,7 +122,7 @@ exports.processRules = async function (self, username, parameters, vargs) {
                                             var resp = rej.supplant({
                                                 location: location
                                             })
-                                            return resolve(resp);
+                                            return resolve([resp, 0]);
 
                                             break;
 
@@ -137,7 +137,6 @@ exports.processRules = async function (self, username, parameters, vargs) {
                             break;
                     }
                     resp = r;
-                    console.log(`Ran command: '${rules.commands[attr].title}'`);
                 }
             }
         }
@@ -151,6 +150,7 @@ exports.processRules = async function (self, username, parameters, vargs) {
                 });
                 var r = rules.patterns[attr].response;
                 var c = rules.patterns[attr].choices;
+                var d = rules.patterns[attr].delay;
 
                 const re = new RegExp(p, 'i');
 
@@ -167,8 +167,7 @@ exports.processRules = async function (self, username, parameters, vargs) {
                         });
                     }
                     resp = r;
-                    console.log(`Ran response: '${rules.patterns[attr].title}'`);
-                    return resolve(r);
+                    return resolve([r, d, 'response', rules.patterns[attr].title]);
                 }
             }
         }

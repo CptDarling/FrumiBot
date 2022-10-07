@@ -12,7 +12,7 @@ var rules = {
 };
 
 getData()
-    .then((state) => console.log('Rules loaded'))
+    .then(() => console.log('Rules loaded'))
     .catch((e) => console.error(e));
 
 function getData() {
@@ -78,7 +78,7 @@ exports.processRules = async function (self, username, parameters, vargs) {
                                     msg = x.supplant({
                                         echo: msg,
                                     });
-                                    return resolve([r, 0, 'command', rules.commands[attr].title]);
+                                    return resolve([msg, 0, 'command', rules.commands[attr].title]);
                                 })
                                 .catch((e) => {
                                     r = null;

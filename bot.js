@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const WebSocketClient = require('websocket').client;
+const { boolean } = require('yargs');
 const config = require('./config.json');
 var modules = require("./modules");
 const token = require('./token');
@@ -18,6 +19,12 @@ const vargs = require('yargs')
         describe: 'Location for weather reports',
         default: 'Wrocław',
         type: 'string'
+    })
+    .option('q', {
+        alias: 'quiet',
+        describe: 'Suppress the chat welcome message on bot startup',
+        default: false,
+        type: boolean
     })
     .describe('t', 'Generate a new token from the current refresh token')
     .help()
@@ -166,7 +173,9 @@ client.on('connect', function (connection) {
                             // Send the initial move message. All other move messages are
                             // sent by the timer.
                             // connection.sendUTF(`PRIVMSG ${channel} :${moveMessage}`);
-                            connection.sendUTF(`PRIVMSG ${channel} :${notificationMessage}`);
+                            if (!vargs.quiet) {
+                                connection.sendUTF(`PRIVMSG ${channel} :${notificationMessage}`);
+                            }
                             break;
                         case 'PART':
                             console.log('The channel must have banned (/ban) the bot.');

@@ -5,6 +5,7 @@ My Twitch bot
 - [FrumiBot](#frumibot)
   - [Bot access](#bot-access)
     - [OAuth Token refresh](#oauth-token-refresh)
+      - [Refresh by `curl`](#refresh-by-curl)
     - [Read and edit permissions](#read-and-edit-permissions)
   - [Links](#links)
 
@@ -14,11 +15,36 @@ When running the bot authentication might fail.  Try these recovery steps.
 
 ### OAuth Token refresh
 
+The token can be refreshed by calling `node ./bot.js -t` and having files `token.json` and `client.json` in the project root.
+
+The structure and content of the files is given below.
+
+See file `C:\Users\Richard\AppData\Roaming\twitch-cli\.twitch-cli.env` for values Twitch CLI used to configure the bot in the first place.
+
+client.json:
+
+```json
+{
+    "CLIENT_ID": "<client ID goes here>",
+    "CLIENT_SECRET": "<client secret goes here>"
+}
+```
+
+token.json:
+
+```json
+{
+    "refresh_token": "<current refresh token>"
+}
+```
+
+The `token.js` file will contain other keys which will have been written by twitch-cli.  The only value used from the file in the refresh procedure is the `refresh_token` value.
+
+#### Refresh by `curl`
+
 ```shell
 curl -X POST https://id.twitch.tv/oauth2/token -H 'Content-Type: application/x-www-form-urlencoded' -d 'grant_type=refresh_token&refresh_token=$REFRESHTOKEN&client_id=$CLIENTID&client_secret=$CLIENTSECRET'
 ```
-
-See the `C:\Users\Richard\AppData\Roaming\twitch-cli\.twitch-cli.env` file for values is Twitch CLI is used.
 
 ### Read and edit permissions
 

@@ -2,13 +2,14 @@ const https = require('https');
 const fs = require('fs');
 const { Console } = require('console');
 
-exports.data = require('./token.json');
+const data = require('./token.json');
+const client = require('./client.json');
 
 const postData = new URLSearchParams({
     grant_type: 'refresh_token',
-    refresh_token: this.data.refresh_token,
-    client_id: process.env.CLIENT_ID,
-    client_secret: process.env.CLIENT_SECRET,
+    refresh_token: data.refresh_token,
+    client_id: client.CLIENT_ID,
+    client_secret: client.CLIENT_SECRET,
 }).toString();
 
 const options = {
@@ -18,7 +19,7 @@ const options = {
     method: 'POST',
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Content-Length': postData.length,
+        'Content-Length': Buffer.byteLength(postData),
     }
 };
 
@@ -36,9 +37,11 @@ exports.refresh = function () {
     const req = https.request(options, res => {
         // console.log(`statusCode: ${res.statusCode}`);
 
-        res.on('data', d => {
+        res.setEncoding('utf8');
+
+        res.on('data', chunk => {
             // process.stdout.write(d);
-            storeData(d, './token.json');
+            storeData(chunk, './token.json');
         });
     });
 

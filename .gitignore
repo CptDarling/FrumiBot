@@ -107,3 +107,4 @@ dist
 .vs/
 config.json
 token.json
+client.json

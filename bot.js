@@ -58,7 +58,7 @@ const moveMessage = 'Get up and move, your body will thank you!';
 const defaultMoveInterval = 1000 * 60 * 40;
 let moveInterval = defaultMoveInterval;
 
-const notificationMessage = "/me Hello, I'm {self}. Please say hi and ask me about !dice [<number>|<dies>d<sides>] or !weather [<location>]. Use !frumibot to read a little bit about me.".supplant({ self: account });
+const notificationMessage = "/me Hello, I'm {self}. Please say hi and ask me about !dice [<number>|<dies>d<sides>] or !weather [<location>]. Use !clip to fetch a random clip from the archive. Use !frumibot to read a little bit about me.".supplant({ self: account });
 
 // const notificationInterval = 1000 * 60 * 1;
 const notificationInterval = 1000 * 60 * 60;
@@ -217,20 +217,20 @@ async function asyncCall(self, user, parameters, connection) {
             var n = resp[3];
             if (m) {
                 var send = `PRIVMSG ${channel} :${m}`.supplant({
-            nick: user,
-            self: self,
-            welcome: notificationMessage,
-            0: parameters.split(/\s+/).shift()
-        });
-        if (send) {
+                    nick: user,
+                    self: self,
+                    welcome: notificationMessage,
+                    0: parameters.split(/\s+/).shift()
+                });
+                if (send) {
                     if (d > 0) {
                         delay(d).then(() => connection.sendUTF(send));
                     } else {
-            connection.sendUTF(send);
-        }
+                        connection.sendUTF(send);
+                    }
                     console.log(`Ran ${t}: ${n}`);
                 }
-    }
+            }
         })
         .catch((e) => console.error(e));
 }

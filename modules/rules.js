@@ -53,6 +53,19 @@ exports.processRules = async function (self, username, parameters, vargs) {
                 });
                 var r = rules.commands[attr].response;
                 var rej = rules.commands[attr].reject;
+                var users = rules.commands[attr].users?.map(element => {
+                    return element.toLowerCase();
+                });
+
+                if (users) {
+                    console.log(`username=${username}`);
+                    console.log(users);
+                    if (users.includes(username)) {
+                        console.log(`User has permission to run this command`);
+                    } else {
+                        console.log(`Chatter ${username} does not have permission to run command ${c}`);
+                    }
+                }
 
                 const re = new RegExp(p);
 

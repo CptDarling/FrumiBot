@@ -236,6 +236,14 @@
             "reject": [
                 "Stop trying to trick me @{nick}, {location} cannot have weather!"
             ]
+        },
+        {
+            "title": "Token Refresh",
+            "pattern": "^!token\\b",
+            "command": "tokenrefresh",
+            "users": [
+                "Frumious__Bandersnatch"
+            ]
         }
     ]
 }

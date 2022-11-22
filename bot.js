@@ -241,7 +241,7 @@ async function asyncCall(self, user, parameters, connection) {
 // to call fn after 1 second.
 
 function delay(time) {
-    return new Promise(resolve => setTimeout(resolve, time));
+    return new Promise(resolve => setTimeout(resolve, time * 1000));
 }
 
 // Parses an IRC message and returns a JSON object with the message's 

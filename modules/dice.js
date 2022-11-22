@@ -7,12 +7,12 @@ exports.diceRoll = function (sides = '1d6') {
         const die = rpg[0];
         const sides = rpg[1];
         if (die > 6) {
-            return "I can't roll more than 6 dice!";
+            return "I flat out refuse to roll more than 6 dice, it's not going to happen!";
         } else if (die <= 0) {
             return "Yo, momma!";
         }
-        if (sides <= 0) {
-            return "That's physically impossible!"
+        if (sides <= 1) {
+            return "Nope, not doing that, that's physically impossible!"
         }
         for (var i = 1; i <= die - 1; i++) {
             if (resp.length === 0) {

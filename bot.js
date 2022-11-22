@@ -20,13 +20,8 @@ const vargs = require('yargs')
         default: 'Wrocław',
         type: 'string'
     })
-    .option('q', {
-        alias: 'quiet',
-        describe: 'Suppress the chat welcome message on bot startup',
-        default: false,
-        type: boolean
-    })
-    .describe('t', 'Generate a new token from the current refresh token')
+    .describe('quiet', 'Suppress the chat welcome message on bot startup')
+    .describe('token', 'Generate a new token from the current refresh token')
     .help()
     .argv;
 
@@ -43,7 +38,7 @@ String.prototype.supplant = function (o) {
 channel = `#${vargs.channel}`;
 console.log(`channel: ${channel}`);
 
-if (vargs.t) {
+if (vargs.token) {
     token.refresh();
     return;
 }
@@ -175,7 +170,7 @@ client.on('connect', function (connection) {
                             // connection.sendUTF(`PRIVMSG ${channel} :${moveMessage}`);
                             if (!vargs.quiet) {
                                 connection.sendUTF(`PRIVMSG ${channel} :${notificationMessage}`);
-                            }
+                            } else { console.log('Starting quietly') }
                             break;
                         case 'PART':
                             console.log('The channel must have banned (/ban) the bot.');

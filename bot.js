@@ -20,11 +20,11 @@ const vargs = require('yargs')
         default: 'Wrocław',
         type: 'string'
     })
+    .describe('noconnect', "Don't connect, used for debugging")
     .describe('quiet', 'Suppress the chat welcome message on bot startup')
     .describe('token', 'Generate a new token from the current refresh token')
     .help()
     .argv;
-
 
 String.prototype.supplant = function (o) {
     return this.replace(/{([^{}]*)}/g,
@@ -198,7 +198,9 @@ client.on('connect', function (connection) {
 
 });
 
-client.connect('ws://irc-ws.chat.twitch.tv:80');
+if (!vargs.noconnect) {
+    client.connect('ws://irc-ws.chat.twitch.tv:80');
+}
 
 async function asyncCall(self, user, parameters, connection) {
     // console.log(`${JSON.stringify(parsedMessage)}`);

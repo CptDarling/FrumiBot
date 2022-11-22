@@ -38,7 +38,8 @@
             "delay": 1,
             "response": [
                 "!chair",
-                "!cloneswap"
+                "!cloneswap",
+                "!quote"
             ]
         },
         {

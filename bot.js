@@ -3,8 +3,9 @@
 const WebSocketClient = require('websocket').client;
 const { boolean } = require('yargs');
 const config = require('./config.json');
-var modules = require("./modules");
+var modules = require('./modules');
 const token = require('./token');
+const timers = require('./timers.js');
 
 // Argument processing
 const vargs = require('yargs')
@@ -75,6 +76,11 @@ client.on('connect', function (connection) {
 
     connection.sendUTF(`PASS ${password}`);
     connection.sendUTF(`NICK ${account}`);
+
+    // // Subscribe to timer events.
+    // addEventListener('timeout', function (e) {
+    //     console.log(e);
+    // }, false);
 
     // Set a timer to post future 'move' messages. This timer can be
     // reset if the user passes, !move [minutes], in chat.

@@ -1,0 +1,20 @@
+{
+    "timers": [
+        {
+            "title": "Welcome",
+            "name": "welcome",
+            "response": "{welcome}",
+            "seconds": 5
+        },
+        {
+            "title": "Move your body",
+            "name": "move",
+            "seconds": 60,
+            "random": 10,
+            "response": [
+                "Get up and move, your body will thank you for it.",
+                "It's time to shake that booty, your audience will thank you for it."
+            ]
+        }
+    ]
+}

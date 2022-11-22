@@ -71,20 +71,14 @@ exports.processRules = async function (self, username, parameters, vargs) {
 
                     switch (c) {
                         case 'refresh':
-                            var x = r;
-                            getData()
-                                .then(() => {
-                                    var msg = parameters.split(/\s+/).slice(1).join(' ');
-                                    msg = x.supplant({
-                                        echo: msg,
-                                    });
-                                    return resolve([msg, 0, 'command', rules.commands[attr].title]);
-                                })
-                                .catch((e) => {
-                                    r = null;
-                                    console.error(e);
-                                    return reject();
-                                });
+                            getData();
+
+                            var msg = parameters.split(/\s+/).slice(1).join(' ');
+                            r = r.supplant({
+                                echo: msg,
+                            });
+
+                            return resolve([r, 0, 'command', rules.commands[attr].title]);
 
                             break;
 
@@ -92,6 +86,7 @@ exports.processRules = async function (self, username, parameters, vargs) {
                             r = r.supplant({
                                 dice: diceRoll(parameters.split(/\s+/)[1]),
                             });
+
                             return resolve([r, 0, 'command', rules.commands[attr].title]);
 
                             break;

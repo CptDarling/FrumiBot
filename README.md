@@ -66,6 +66,8 @@ Then retry fetching the token.
 
 ## Links
 
+Chat: [Frumious__Bandersnatch - Chat - Twitch](https://www.twitch.tv/popout/frumious__bandersnatch/chat?popout=)
+
 https://dev.twitch.tv/docs/irc/example-bot
 
 https://dev.twitch.tv/docs/api/reference

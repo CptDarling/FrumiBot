@@ -6,6 +6,26 @@ Features:
         Hi @dawdle, it's really great to see you again.
         Is this THE @SlaterUSA I've heard so much about?
     ☐ Add timers
+    ☐ Make mod only commands
+    ✘ !fbaddquote cryptocod3 The quote text goes here @cancelled(22-09-23 15:36)
+    ✔ !frumiBot Responds with technology used @done(22-09-23 15:35)
+    ☐ FrumiBlob, a points system where chat can be awarded these points for interesting, helpful or funny posts.
+        !frumiblobs - How many points does a user hold.
+        !blob {nick} +x - Adds x (default 1) FrumiBlobs (Ӻ) to {nick}s total. (Start Jackie with 1000). - Make this a mod (me) only command.
+    ☐ Honours
+        {
+            "title": "Honour",
+            "pattern": "^!givemeanhonour\\b",
+            "response": "I bestow upon thee {nick}: {choose}",
+            "choices": [
+                "The Order of the Grand Toot"
+            ],
+            "save": "true"
+        }
+    
+
+Bugs:
+    ☐ Responses to the !toot command are being ignored, they need to pause 0.5 seconds.
 
 Timer phrases:
     ☐ Implement timer and phrases @1h
@@ -18,6 +38,13 @@ Timer phrases:
         ☐ /me did you really mean to do that?
         ☐ /me I see you.
         ☐ !subtember
+        ☐ "/announceblue Valheim server: "[UK/EU] Valheim Jackie_Codes" IP:132.145.68.233:2456 DM @Jackie_Codes or @Frumious__Bandersnatch on discord for the password."
+
+Blog Post:
+    ☐ Write a blog post about FrumiBot for Jackie's blog.
+
+Quotes:
+    ☐ /me "IMO, the priority should always be to optimize for happiness. Whatever that entails." cryptocod3
 
 Internal:
     ☐ Make non blocking calls to the rules processor.

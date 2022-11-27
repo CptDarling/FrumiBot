@@ -11,5 +11,18 @@
   "dependencies": {
     "websocket": "^1.0.34",
     "yargs": "^17.6.2"
-  }
+  },
+  "devDependencies": {
+    "mocha": "^10.1.0",
+    "request": "^2.88.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CptDarling/FrumiBot.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/CptDarling/FrumiBot/issues"
+  },
+  "homepage": "https://github.com/CptDarling/FrumiBot#readme"
 }

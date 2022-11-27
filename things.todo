@@ -23,6 +23,7 @@ Features:
             "save": "true"
         }
     
+    ☐ Implement this: https://dev.twitch.tv/docs/irc/send-receive-messages
 
 Bugs:
     ☐ Responses to the !toot command are being ignored, they need to pause 0.5 seconds.

@@ -207,6 +207,11 @@
                 "/me I was written in September 2022 by @Frumious__Bandersnatch to add a little spice to @Jackie_Codes chat room. I initially understood commands !weather and !dice. I like saying hello to people in chat. I was inspired to make various responses when @SlaterUSA farts. Every now and then I like to remind people to move so their bodies don't atrophy. I am written in nodejs and make use of the OpenWeatherMap API."
             ]
         },
+	{
+		"title": "Croud",
+		"pattern": "^!croud\\b",
+		"response": "jackehParty jackehJam jackehParty jackehJam jackehDerp jackehPopacap jackehParty jackehJam LUL jackehAnnoyed jackehPuppyEyes jackehUgh jackehDerp jackehUgh jackehHellYeah CoolStoryBob jackehHellYeah jackehPopacap jackehParty jackehJam jackehLaCroix LUL jackehAnnoyed jackehLulz CoolStoryBob jackehFlip jackehLaCroix jackehDerp jackehDerp jackehParty jackehParty jackehParty jackehJam jackehParty jackehAnnoyed CoolStoryBob jackehHellYeah jackehAnnoyed jackehJam jackehJam jackehAnnoyed jackehFlip"
+	},
         {
             "title": "Naughty FrumiBot!",
             "pattern": "\\bnaughty [@]?FrumiBot\\b",

@@ -23,8 +23,8 @@
             "pattern": "^(hi|hello|hallo|hello)!*$",
             "response": [
                 "Hi, nice to meet you @{nick}",
-                "Hi @{nick} it is a pleasure to welcome you",
-                "Hi @{nick} nice to see you here. Pull up a seat and enjoy the show."
+                "Hi @{nick} it's a pleasure to welcome you",
+                "Hi @{nick} nice to see you here. Pull up a seat and I hope you enjoy the show."
             ]
         },
         {
@@ -202,7 +202,7 @@
         },
         {
             "title": "FrumiBot Tech",
-            "pattern": "^!frumibot\\b",
+            "pattern": "^!frumibot\\?\\b",
             "response": [
                 "/me I was written in September 2022 by @Frumious__Bandersnatch to add a little spice to @Jackie_Codes chat room. I initially understood commands !weather and !dice. I like saying hello to people in chat. I was inspired to make various responses when @SlaterUSA farts. Every now and then I like to remind people to move so their bodies don't atrophy. I am written in nodejs and make use of the OpenWeatherMap API."
             ]

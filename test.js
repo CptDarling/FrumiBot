@@ -1,25 +1,29 @@
+const clips = require('./clips');
 const users = require('./users');
-var broadcaster_id;
-if (!broadcaster_id) {
-    
-users.getUser('frumious_bandersnatch')
+
+users.getUser('jackie_codes')
     .then((res) => {
         if (res) {
-            console.log('res: ', res);
-            broadcaster_id = res.id;
-        }
-    }, (err) => {
-        console.error('res Error: ', err);
-    })
-    .catch((err) => {
-        console.error('catch Error: ', err);
-    })
-    .finally(() => {
-        console.log('broadcaster_id: ', broadcaster_id);
-        console.log("finally over");
-    });
-}
+            // console.log(res);
+            var broadcaster_id = res.id;
+            // console.log('broadcaster_id: ', broadcaster_id)
 
-// console.log(data);
-// console.log(data[0]);
-// const [id] = data[0];
+            clips.refreshData(broadcaster_id)
+            .then((res) => console.log('res: ', res));
+
+        }
+        // clips.fetch()
+        //     .then((res) => {
+        //         if (res) {
+        //             console.log('res: ', res);
+        //         }
+        //     }, (err) => {
+        //         console.error('res Error: ', err);
+        //     })
+        //     .catch((err) => {
+        //         console.error('catch Error: ', err);
+        //     })
+        //     .finally(() => {
+        //         console.log("finally over");
+        //     });
+    });

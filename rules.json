@@ -1,6 +1,11 @@
 {
     "patterns": [
         {
+            "title": "VLDL Fishing",
+            "pattern": "^morning\\b",
+            "response": "Nice day for fishin', ain't it."
+        },
+        {
             "title": "Perk Up",
             "pattern": "^[@]*{self}\\b",
             "response": "{welcome}"

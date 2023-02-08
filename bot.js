@@ -48,11 +48,6 @@ const client = new WebSocketClient();
 const account = 'FrumiBot';   // Replace with the account the bot runs as
 const password = `oauth:${token.data.access_token}`;
 
-const moveMessage = 'Get up and move, your body will thank you!';
-// const defaultMoveInterval = 1000 * 60 * 1; // Set to 1 minute for testing.
-const defaultMoveInterval = 1000 * 60 * 40;
-let moveInterval = defaultMoveInterval;
-
 const notificationMessage = "/me Hello, I'm {self}. Please say hi and ask me about !dice [<number>|<dies>d<sides>] or !weather [<location>]. Use !clip to fetch a random clip from the archive. Use !frumibot to read a little bit about me.".supplant({ self: account });
 
 // const notificationInterval = 1000 * 60 * 1;
@@ -75,12 +70,6 @@ client.on('connect', function (connection) {
 
     connection.sendUTF(`PASS ${password}`);
     connection.sendUTF(`NICK ${account}`);
-
-    // Set a timer to post future 'move' messages. This timer can be
-    // reset if the user passes, !move [minutes], in chat.
-    let intervalObj = setInterval(() => {
-        connection.sendUTF(`PRIVMSG ${channel} :${moveMessage}`);
-    }, moveInterval);
 
     // Set a timer to post a notification for FrumiBot.
     let notObj = setInterval(() => {
@@ -116,46 +105,7 @@ client.on('connect', function (connection) {
 
                     switch (parsedMessage.command.command) {
                         case 'PRIVMSG':
-
-                            // Ignore all messages except the '!move' bot
-                            // command. A user can post a !move command to change the 
-                            // interval for when the bot posts its move message.
-
-                            if ('move' === parsedMessage.command.botCommand) {
-
-                                // Assumes the command's parameter is well formed (e.g., !move 15).
-
-                                let updateInterval = (parsedMessage.command.botCommandParams) ?
-                                    parseInt(parsedMessage.command.botCommandParams) * 1000 * 60 : defaultMoveInterval;
-
-                                if (moveInterval != updateInterval) {
-                                    // Valid range: 1 minute to 60 minutes
-                                    if (updateInterval >= 60000 && updateInterval <= 3600000) {
-                                        moveInterval = updateInterval;
-
-                                        // Reset the timer.
-                                        clearInterval(intervalObj);
-                                        intervalObj = null;
-                                        intervalObj = setInterval(() => {
-                                            connection.sendUTF(`PRIVMSG ${channel} :${moveMessage}`);
-                                        }, moveInterval);
-                                    }
-                                }
-                            }
-                            else if ('moveoff' === parsedMessage.command.botCommand) {
-                                clearInterval(intervalObj);
-                                connection.sendUTF(`PART ${channel}`);
-                                connection.close();
-                            }
-                            // else if ('colour' === parsedMessage.command.botCommand) {
-                            //     const req = new Request(`https://api.twitch.tv/helix/chat/color`);
-                            // }
-                            else {
-
-                                asyncCall(account, parsedMessage.source.nick, parsedMessage.parameters, connection);
-
-                            }
-
+                            asyncCall(account, parsedMessage.source.nick, parsedMessage.parameters, connection);
                             break;
                         case 'PING':
                             connection.sendUTF('PONG ' + parsedMessage.parameters);
@@ -165,9 +115,6 @@ client.on('connect', function (connection) {
                             connection.sendUTF(`JOIN ${channel}`);
                             break;
                         case 'JOIN':
-                            // Send the initial move message. All other move messages are
-                            // sent by the timer.
-                            // connection.sendUTF(`PRIVMSG ${channel} :${moveMessage}`);
                             if (!vargs.quiet) {
                                 connection.sendUTF(`PRIVMSG ${channel} :${notificationMessage}`);
                             } else { console.log('Starting quietly') }

@@ -84,8 +84,6 @@ client.on('connect', function (connection) {
         console.log('Connection Closed');
         console.log(`close description: ${connection.closeDescription}`);
         console.log(`close reason code: ${connection.closeReasonCode}`);
-
-        clearInterval(intervalObj);
     });
 
     // Process the Twitch IRC message.

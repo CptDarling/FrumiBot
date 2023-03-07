@@ -1135,7 +1135,7 @@
         },
         {
             "title": "Fart",
-            "pattern": "\\bplayed fart\\b",
+            "pattern": "\\bplayed .*fart\\b",
             "response": "Oh excuse you @{0}, that was {choose}!",
             "choices": [
                 "a wet one",
@@ -1191,7 +1191,21 @@
             "title": "Refresh from Rules File",
             "command": "refresh",
             "pattern": "^!fb\\b",
-            "response": "/me {echo}"
+            "response": [
+		"Electrodes activated",
+		"Electrodes activated",
+		"Electrodes activated",
+		"Electrodes activated",
+		"Electrodes activated",
+		"Electrodes activated",
+		"Electrodes activated",
+		"Electrodes activated",
+		"Electrodes activated",
+		"Electrodes activated",
+		"Electrodes activated, please do that again!",
+		"Electrodes activated, please do not do that again",
+		"Electrodes activated, it hurts!"
+	    ]
         },
         {
             "title": "Dice Roll",
@@ -1205,7 +1219,9 @@
             "pattern": "^!weather",
             "response": "/me Weather report for @{nick} in {city}, {country}: Temperature {celcius}°C ({fahrenheit}°F), humidity {humidity}% with {description}. Visibility is {visibility}km.",
             "reject": [
-                "Stop trying to trick me @{nick}, {location} cannot have weather!"
+                "Stop trying to trick me @{nick}, {location} cannot have weather!",
+                "I'm afraid I can't do that @{nick}, there is no weather in {location}!",
+                "Are you sure {location} exists @{nick}, I can't find it anywhere?"
             ]
         }
     ]

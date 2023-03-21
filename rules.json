@@ -1,6 +1,14 @@
 {
     "patterns": [
         {
+	    "title": "Hey",
+	    "pattern": ".+ [@]*{self}\\b",
+	    "response": [
+	        "Hey",
+		"How you doin'?"
+            ]
+	},
+        {
             "title": "VLDL Fishing",
             "pattern": "^morning\\b",
             "response": "Nice day for fishin', ain't it."

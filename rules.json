@@ -1,13 +1,13 @@
 {
     "patterns": [
         {
-	    "title": "Hey",
-	    "pattern": ".+ [@]*{self}\\b",
-	    "response": [
-	        "Hey",
-		"How you doin'?"
+            "title": "Hey",
+            "pattern": ".+ [@]*{self}\\b",
+            "response": [
+                "Hey \\o/",
+                "How you doin'?"
             ]
-	},
+        },
         {
             "title": "VLDL Fishing",
             "pattern": "^morning\\b",
@@ -1205,20 +1205,20 @@
             "command": "refresh",
             "pattern": "^!fb\\b",
             "response": [
-		"Electrodes activated",
-		"Electrodes activated",
-		"Electrodes activated",
-		"Electrodes activated",
-		"Electrodes activated",
-		"Electrodes activated",
-		"Electrodes activated",
-		"Electrodes activated",
-		"Electrodes activated",
-		"Electrodes activated",
-		"Electrodes activated, please do that again!",
-		"Electrodes activated, please do not do that again",
-		"Electrodes activated, it hurts!"
-	    ]
+                "Electrodes activated",
+                "Electrodes activated",
+                "Electrodes activated",
+                "Electrodes activated",
+                "Electrodes activated",
+                "Electrodes activated",
+                "Electrodes activated",
+                "Electrodes activated",
+                "Electrodes activated",
+                "Electrodes activated",
+                "Electrodes activated, please do that again!",
+                "Electrodes activated, please do not do that again",
+                "Electrodes activated, it hurts!"
+            ]
         },
         {
             "title": "Dice Roll",

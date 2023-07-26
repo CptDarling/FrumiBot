@@ -2,7 +2,7 @@
 
 const WebSocketClient = require('websocket').client;
 const { boolean } = require('yargs');
-const config = require('./config.json');
+const config = require('../config.json');
 var modules = require("./modules");
 const token = require('./token');
 

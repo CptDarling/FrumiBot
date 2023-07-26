@@ -2,8 +2,8 @@ const https = require('https');
 const fs = require('fs');
 const { Console } = require('console');
 
-exports.data = require('./token.json');
-const client = require('./client.json');
+exports.data = require('../token.json');
+const client = require('../client.json');
 
 const postData = new URLSearchParams({
     grant_type: 'refresh_token',

@@ -1,6 +1,6 @@
 const fs = require('fs');
-const { refresh } = require('../token');
-const config = require('../config.json');
+const { refresh } = require('../../token.json');
+const config = require('../../config.json');
 const { getWeather } = require('./weather');
 const { resolve } = require('path');
 const { diceRoll } = require('./dice');

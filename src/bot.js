@@ -5,6 +5,7 @@ const { boolean } = require('yargs');
 const config = require('../config.json');
 var modules = require("./modules");
 const token = require('./token');
+const { welcome } = require('../rules.json');
 
 // Argument processing
 const vargs = require('yargs')
@@ -48,7 +49,7 @@ const client = new WebSocketClient();
 const account = 'FrumiBot';   // Replace with the account the bot runs as
 const password = `oauth:${token.data.access_token}`;
 
-const notificationMessage = "/me Hello, I'm {self}. Please say hi and ask me about !dice [<number>|<dies>d<sides>] or !weather [<location>]. Use !clip to fetch a random clip from the archive. Use !frumibot to read a little bit about me.".supplant({ self: account });
+const notificationMessage = welcome.supplant({ self: account });
 
 // const notificationInterval = 1000 * 60 * 1;
 const notificationInterval = 1000 * 60 * 60;

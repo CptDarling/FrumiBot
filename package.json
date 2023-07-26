@@ -2,11 +2,11 @@
   "name": "frumibot",
   "version": "0.0.1",
   "description": "My Twitch bot built from a Twitch example",
-  "main": "bot.js",
+  "main": "./src/bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "token": "node ./bot.js --token",
-    "start": "node ./"
+    "token": "node ./src/bot.js --token",
+    "start": "node ./src/bot.js"
   },
   "author": "Richard Holyoak",
   "license": "ISC",

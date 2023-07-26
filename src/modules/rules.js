@@ -1,9 +1,10 @@
 const fs = require('fs');
-const { refresh } = require('../token');
-const config = require('../config.json');
+const { refresh } = require('../../token.json');
+const config = require('../../config.json');
 const { getWeather } = require('./weather');
 const { resolve } = require('path');
 const { diceRoll } = require('./dice');
+const { dadJoke } = require('./dadjokes');
 
 var dataAvailable = false;
 var rules = {
@@ -44,6 +45,8 @@ exports.processRules = async function (self, username, parameters, vargs) {
         var found = false;
         var title;
 
+        let executed;
+
         // Commands
         if (!resp) {
             for (var attr in rules.commands) {
@@ -70,6 +73,28 @@ exports.processRules = async function (self, username, parameters, vargs) {
                     }
 
                     switch (c) {
+
+                        case 'joke':
+
+                            /* 
+                                Need to return a promise from this call because it relies
+                                on a web service.  When we get a response then we can supplant the
+                                received text into our defined command string then resolve the result.
+                             */
+                            dadJoke().then((text) => {
+                                msg = text;
+                                r = r.supplant({
+                                    joke: msg,
+                                })
+                                return resolve([r, 0, 'command', rules.commands[attr].title]);
+
+                            });
+                            
+                            // Stop the for loop.
+                            executed = true;
+                            
+                            break;
+
                         case 'refresh':
                             getData();
 
@@ -80,6 +105,9 @@ exports.processRules = async function (self, username, parameters, vargs) {
 
                             return resolve([r, 0, 'command', rules.commands[attr].title]);
 
+                            // Stop the for loop.
+                            executed = true;
+
                             break;
 
                         case 'dice':
@@ -88,6 +116,9 @@ exports.processRules = async function (self, username, parameters, vargs) {
                             });
 
                             return resolve([r, 0, 'command', rules.commands[attr].title]);
+
+                            // Stop the for loop.
+                            executed = true;
 
                             break;
 
@@ -126,12 +157,18 @@ exports.processRules = async function (self, username, parameters, vargs) {
                                     }
                                 });
 
+                            // Stop the for loop.
+                            executed = true;
+
                             break;
 
                         default:
                             break;
                     }
                     resp = r;
+                }
+                if (executed) {
+                    break;
                 }
             }
         }
@@ -167,9 +204,6 @@ exports.processRules = async function (self, username, parameters, vargs) {
             }
         }
 
-        // if (resp) {
-        //     return resolve(resp);
-        // }
     })
 
 }

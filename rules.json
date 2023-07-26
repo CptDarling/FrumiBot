@@ -1,4 +1,5 @@
 {
+    "welcome": "/me Hello, I'm {self}. Please say hi and ask me about !dice [<number>|<dies>d<sides>] or !weather [<location>]. Use !clip to fetch a random clip from the archive. Use !frumibot to read a little bit about me. Use !joke for an outrageously funny joke.",
     "patterns": [
         {
             "title": "Hey",
@@ -1150,11 +1151,11 @@
             "title": "Fart",
             "pattern": "\\bplayed .*fart\\b",
             "response": [
-		    "Oh excuse you @{0}, that was {choose}!",
-		    "@{0} just pebble dashed the back wall!",
-		    "Are you okay @{0}? I think you just followed through.",
-		    "Geez Louise, @{0} just made me want to heave."
-	    ],
+                "Oh excuse you @{0}, that was {choose}!",
+                "@{0} just pebble dashed the back wall!",
+                "Are you okay @{0}? I think you just followed through.",
+                "Geez Louise, @{0} just made me want to heave."
+            ],
             "choices": [
                 "a wet one",
                 "a bubbly one",
@@ -1195,6 +1196,12 @@
         }
     ],
     "commands": [
+        {
+            "title": "Tell a dad joke",
+            "command": "joke",
+            "pattern": "^!joke$",
+            "response": "{joke}"
+        },
         {
             "title": "Refresh from Rules File",
             "command": "refresh",

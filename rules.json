@@ -1199,7 +1199,7 @@
         {
             "title": "Tell a dad joke",
             "command": "joke",
-            "pattern": "^!joke$",
+            "pattern": "^!joke\\b",
             "response": "{joke}"
         },
         {

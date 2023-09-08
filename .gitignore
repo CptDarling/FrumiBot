@@ -109,3 +109,4 @@ config.json
 token.json
 client.json
 .obsidian/
+clips.json

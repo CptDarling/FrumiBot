@@ -63,6 +63,12 @@
             ]
         },
         {
+            "title": "Join in the fun",
+            "pattern": "^!fbjoin\\b",
+            "delay": 4,
+            "response": "!join"
+        },
+        {
             "title": "Clips",
             "pattern": "^!clip\\b",
             "response": [

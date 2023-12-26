@@ -69,6 +69,14 @@
             "response": "!join"
         },
         {
+            "title": "Chatup line",
+            "pattern": "^!chatup\\b",
+            "delay": 15,
+            "response": [
+                "Are you a beaver? Cause daaaaaaaaam!"
+            ]
+        },
+        {
             "title": "Clips",
             "pattern": "^!clip\\b",
             "response": [

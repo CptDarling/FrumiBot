@@ -3,11 +3,20 @@
 My Twitch bot
 
 - [FrumiBot](#frumibot)
+  - [The `.env` file](#the-env-file)
   - [Bot access](#bot-access)
     - [OAuth Token refresh](#oauth-token-refresh)
       - [Refresh by `curl`](#refresh-by-curl)
     - [Read and edit permissions](#read-and-edit-permissions)
   - [Links](#links)
+
+## The `.env` file
+
+```plaintext
+CLIENT_ID='<client ID goes here>'
+CLIENT_SECRET='<client secret goes here>'
+OWM_API_KEY='<OpenWeatherMap API key goeshere>'
+```
 
 ## Bot access
 
@@ -15,20 +24,11 @@ When running the bot authentication might fail.  Try these recovery steps.
 
 ### OAuth Token refresh
 
-The token can be refreshed by calling `node ./bot.js -t` and having files `token.json` and `client.json` in the project root.
+The token can be refreshed by calling `npm run token` in the project root.
 
 The structure and content of the files is given below.
 
 See file `C:\Users\Richard\AppData\Roaming\twitch-cli\.twitch-cli.env` for values Twitch CLI used to configure the bot in the first place.
-
-client.json:
-
-```json
-{
-    "CLIENT_ID": "<client ID goes here>",
-    "CLIENT_SECRET": "<client secret goes here>"
-}
-```
 
 token.json:
 

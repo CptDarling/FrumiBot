@@ -1,15 +1,16 @@
+require("dotenv").config({ path: "./.env" });
+
 const https = require('https');
 const fs = require('fs');
 const { Console } = require('console');
 
 exports.data = require('../token.json');
-const client = require('../client.json');
 
 const postData = new URLSearchParams({
     grant_type: 'refresh_token',
     refresh_token: this.data.refresh_token,
-    client_id: client.CLIENT_ID,
-    client_secret: client.CLIENT_SECRET,
+    client_id: process.env.CLIENT_ID,
+    client_secret: process.env.CLIENT_SECRET,
 }).toString();
 
 const options = {

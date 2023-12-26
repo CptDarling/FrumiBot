@@ -105,8 +105,6 @@ dist
 
 # Manually added
 .vs/
-config.json
 token.json
-client.json
 .obsidian/
 clips.json

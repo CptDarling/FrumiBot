@@ -73,7 +73,16 @@
             "pattern": "^!chatup\\b",
             "delay": 15,
             "response": [
-                "Are you a beaver? Cause daaaaaaaaam!"
+                "Are you a beaver? Cause daaaaaaaaam!",
+                "This is the police! You’re under arrest for being too cute, now put your hands where I can hold them.",
+                "You must be a campfire. Because you’re super hot and I want s’more.",
+                "My buddies bet me that I wouldn’t be able to start a conversation with the most beautiful person in the club.",
+                "There's a big sale in my bedroom right now. Clothes are 100% off!",
+                "If you were a Transformer, you'd be Optimus Fine.",
+                "If women were boogers, I'd pick you first.",
+                "Know what’s on the menu? Me ‘N’ U.",
+                "Well, here I am. what are your other two wishes?",
+                "There must be something wrong with my phone, because it doesn’t have your number in it."
             ]
         },
         {

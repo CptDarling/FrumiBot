@@ -1,6 +1,5 @@
 const fs = require('fs');
 const { refresh } = require('../../token.json');
-const config = require('../../config.json');
 const { getWeather } = require('./weather');
 const { resolve } = require('path');
 const { diceRoll } = require('./dice');
@@ -76,7 +75,7 @@ exports.processRules = async function (self, username, parameters, vargs) {
 
                         case 'joke':
 
-                            /* 
+                            /*
                                 Need to return a promise from this call because it relies
                                 on a web service.  When we get a response then we can supplant the
                                 received text into our defined command string then resolve the result.
@@ -89,10 +88,10 @@ exports.processRules = async function (self, username, parameters, vargs) {
                                 return resolve([r, 0, 'command', rules.commands[attr].title]);
 
                             });
-                            
+
                             // Stop the for loop.
                             executed = true;
-                            
+
                             break;
 
                         case 'refresh':
@@ -127,7 +126,7 @@ exports.processRules = async function (self, username, parameters, vargs) {
                             if (!location) {
                                 location = vargs.location;
                             }
-                            getWeather(location, config.OWM.api_key)
+                            getWeather(location)
                                 .then((data) => {
                                     r = r.supplant({
                                         celcius: data.celcius,

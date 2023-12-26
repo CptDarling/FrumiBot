@@ -1,9 +1,11 @@
-exports.getWeather = function (location, api_key) {
+require("dotenv").config({ path: "./.env" });
+
+exports.getWeather = function (location) {
     return new Promise((resolve, reject) => {
 
         console.log(`location: ${location}`);
 
-        const req = new Request(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${api_key}`);
+        const req = new Request(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${process.env.OWM_API_KEY}`);
 
         fetch(req)
             .then((res) => {

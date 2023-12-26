@@ -2,7 +2,6 @@
 
 const WebSocketClient = require('websocket').client;
 const { boolean } = require('yargs');
-const config = require('../config.json');
 var modules = require("./modules");
 const token = require('./token');
 const { welcome } = require('../rules.json');
@@ -179,7 +178,7 @@ async function asyncCall(self, user, parameters, connection) {
 }
 
 // To delay a function execution in JavaScript by 1 second, wrap a promise execution
-// inside a function and wrap the Promise's resolve() in a setTimeout() as shown below. 
+// inside a function and wrap the Promise's resolve() in a setTimeout() as shown below.
 // setTimeout() accepts time in milliseconds, so setTimeout(fn, 1000) tells JavaScript
 // to call fn after 1 second.
 
@@ -187,9 +186,9 @@ function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time * 1000));
 }
 
-// Parses an IRC message and returns a JSON object with the message's 
-// component parts (tags, source (nick and host), command, parameters). 
-// Expects the caller to pass a single message. (Remember, the Twitch 
+// Parses an IRC message and returns a JSON object with the message's
+// component parts (tags, source (nick and host), command, parameters).
+// Expects the caller to pass a single message. (Remember, the Twitch
 // IRC server may send one or more IRC messages in a single message.)
 
 function parseMessage(message) {
@@ -266,7 +265,7 @@ function parseMessage(message) {
         parsedMessage.parameters = rawParametersComponent;
 
         if (rawParametersComponent && rawParametersComponent[0] === '!') {
-            // The user entered a bot command in the chat window.            
+            // The user entered a bot command in the chat window.
             parsedMessage.command = parseParameters(rawParametersComponent, parsedMessage.command);
         }
     }
@@ -391,7 +390,7 @@ function parseCommand(rawCommandComponent) {
             parsedCommand = {
                 command: commandParts[0],
                 isCapRequestEnabled: (commandParts[2] === 'ACK') ? true : false,
-                // The parameters part of the messages contains the 
+                // The parameters part of the messages contains the
                 // enabled capabilities.
             }
             break;
@@ -417,7 +416,7 @@ function parseCommand(rawCommandComponent) {
         case '421':
             console.log(`Unsupported IRC command: ${commandParts[2]}`)
             return null;
-        case '001':  // Logged in (successfully authenticated). 
+        case '001':  // Logged in (successfully authenticated).
             parsedCommand = {
                 command: commandParts[0],
                 channel: commandParts[1]

@@ -1407,6 +1407,8 @@
             "pattern": "\\bplayed .*fart\\b",
             "response": [
                 "Oh excuse you @{0}, that was {choose}!",
+                "Oh excuse you @{0}, that was {choose}!",
+                "Oh excuse you @{0}, that was {choose}!",
                 "@{0} just pebble dashed the back wall!",
                 "Are you okay @{0}? I think you just followed through.",
                 "Geez Louise, @{0} just made me want to heave."

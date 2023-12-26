@@ -22,7 +22,6 @@ const vargs = require('yargs')
     })
     .describe('noconnect', "Don't connect, used for debugging")
     .describe('quiet', 'Suppress the chat welcome message on bot startup')
-    .describe('token', 'Generate a new token from the current refresh token')
     .help()
     .argv;
 
@@ -37,11 +36,6 @@ String.prototype.supplant = function (o) {
 
 channel = `#${vargs.channel}`;
 console.log(`channel: ${channel}`);
-
-if (vargs.token) {
-    token.refresh();
-    return;
-}
 
 const client = new WebSocketClient();
 

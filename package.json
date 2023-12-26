@@ -5,7 +5,7 @@
   "main": "./src/bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "token": "node ./src/bot.js --token",
+    "token": "node ./src/token.js refresh",
     "start": "node ./src/bot.js"
   },
   "author": "Richard Holyoak",

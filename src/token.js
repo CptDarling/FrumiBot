@@ -40,7 +40,7 @@ exports.refresh = function () {
         res.setEncoding('utf8');
 
         res.on('data', chunk => {
-            process.stdout.write(chunk);
+            process.stdout.write(JSON.stringify(JSON.parse(chunk), null, 2));
             storeData(chunk, './token.json');
         });
     });
@@ -51,4 +51,15 @@ exports.refresh = function () {
 
     req.write(postData);
     req.end();
+}
+
+for (let i = 0; i < process.argv.length; i++) {
+    switch (process.argv[i]) {
+        case 'refresh':
+            this.refresh();
+            break;
+
+        default:
+            break;
+    }
 }

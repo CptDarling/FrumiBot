@@ -4,6 +4,7 @@ const { getWeather } = require('./weather');
 const { resolve } = require('path');
 const { diceRoll } = require('./dice');
 const { dadJoke } = require('./dadjokes');
+const { getRandomClip } = require('../../clips.js');
 
 var dataAvailable = false;
 var rules = {
@@ -88,6 +89,25 @@ exports.processRules = async function (self, username, parameters, vargs) {
                                 return resolve([r, 0, 'command', rules.commands[attr].title]);
 
                             });
+
+                            // Stop the for loop.
+                            executed = true;
+
+                            break;
+
+                        case 'clip':
+                            aClip = getRandomClip();
+                            console.log(aClip);
+                            date = new Date(aClip.created_at);
+                            r =r.supplant({
+                                clip: aClip.url,
+                                created: new Intl.DateTimeFormat('en-GB', {
+                                    dateStyle: 'full',
+                                    timeStyle: 'long',
+                                    timeZone: 'Europe/Warsaw',
+                                }).format(date)
+                            });
+                            return resolve([r, 0, 'command', rules.commands[attr].title]);
 
                             // Stop the for loop.
                             executed = true;

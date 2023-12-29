@@ -5,6 +5,7 @@ const { boolean } = require('yargs');
 var modules = require("./modules");
 const token = require('./token');
 const { welcome } = require('../rules.json');
+const { doLoadClips } = require('../clips.js');
 
 // Argument processing
 const vargs = require('yargs')

@@ -81,6 +81,9 @@ client.on('connect', function (connection) {
         console.log(`close reason code: ${connection.closeReasonCode}`);
     });
 
+    // Grab all the clips from the bradcaster.
+    doLoadClips(vargs.channel);
+
     // Process the Twitch IRC message.
 
     connection.on('message', function (ircMessage) {
@@ -100,38 +103,38 @@ client.on('connect', function (connection) {
                         case 'PRIVMSG':
                             asyncCall(account, parsedMessage.source.nick, parsedMessage.parameters, connection);
                             break;
-                        case 'PING':
-                            connection.sendUTF('PONG ' + parsedMessage.parameters);
+                            case 'PING':
+                                connection.sendUTF('PONG ' + parsedMessage.parameters);
+                                break;
+                                case '001':
+                                    // Successfully logged in, so join the channel.
+                                    connection.sendUTF(`JOIN ${channel}`);
+                                    break;
+                                    case 'JOIN':
+                                        if (!vargs.quiet) {
+                                            connection.sendUTF(`PRIVMSG ${channel} :${notificationMessage}`);
+                                        } else { console.log('Starting quietly') }
                             break;
-                        case '001':
-                            // Successfully logged in, so join the channel.
-                            connection.sendUTF(`JOIN ${channel}`);
-                            break;
-                        case 'JOIN':
-                            if (!vargs.quiet) {
-                                connection.sendUTF(`PRIVMSG ${channel} :${notificationMessage}`);
-                            } else { console.log('Starting quietly') }
-                            break;
-                        case 'PART':
-                            console.log('The channel must have banned (/ban) the bot.');
-                            connection.close();
-                            break;
-                        case 'NOTICE':
-                            // If the authentication failed, leave the channel.
-                            // The server will close the connection.
-                            if ('Login authentication failed' === parsedMessage.parameters) {
-                                console.log(`Authentication failed; left ${channel}`);
-                                connection.sendUTF(`PART ${channel}`);
-                            }
-                            else if ('You don’t have permission to perform that action' === parsedMessage.parameters) {
-                                console.log(`No permission. Check if the access token is still valid. Left ${channel}`);
-                                connection.sendUTF(`PART ${channel}`);
-                            }
-                            break;
-                        default:
+                            case 'PART':
+                                console.log('The channel must have banned (/ban) the bot.');
+                                connection.close();
+                                break;
+                                case 'NOTICE':
+                                    // If the authentication failed, leave the channel.
+                                    // The server will close the connection.
+                                    if ('Login authentication failed' === parsedMessage.parameters) {
+                                        console.log(`Authentication failed; left ${channel}`);
+                                        connection.sendUTF(`PART ${channel}`);
+                                    }
+                                    else if ('You don’t have permission to perform that action' === parsedMessage.parameters) {
+                                        console.log(`No permission. Check if the access token is still valid. Left ${channel}`);
+                                        connection.sendUTF(`PART ${channel}`);
+                                    }
+                                    break;
+                                    default:
                             ; // Ignore all other IRC messages.
+                        }
                     }
-                }
             });
         }
     });

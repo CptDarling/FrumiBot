@@ -1,11 +1,10 @@
 require("dotenv").config({ path: "./.env" });
 const { access_token } = require("./token.json");
-const { writeFile } = require("fs");
+const { getUser } = require('./users.js')
 
-const STREAMER_NAME = '680776397';
 const clipsArray = [];
 
-let apiUrl = `https://api.twitch.tv/helix/clips?broadcaster_id=${STREAMER_NAME}&first=100`;
+const API_BASE = 'https://api.twitch.tv/helix/clips?broadcaster_id=';
 
 exports.getClipsArray = () => {
   return clipsArray;
@@ -17,7 +16,7 @@ exports.getRandomClip = () => {
   return randomElement;
 }
 
-const fetchClips = (url) => {
+const fetchClips = (url, user) => {
   console.log(`fetchClips("${url}")`);
   return fetch(url, {
     headers: {
@@ -35,8 +34,8 @@ const fetchClips = (url) => {
       const pagination = data.pagination;
       if (pagination && pagination.cursor) {
         // Fetch the next page of clips
-        apiUrl = `https://api.twitch.tv/helix/clips?broadcaster_id=${STREAMER_NAME}&first=100&after=${pagination.cursor}`;
-        return fetchClips(apiUrl);
+        apiUrl = API_BASE + `${user.id}&first=100&after=${pagination.cursor}`;
+        return fetchClips(apiUrl, user);
       } else {
         return clipsArray;
       }
@@ -46,27 +45,35 @@ const fetchClips = (url) => {
     });
 };
 
-fetchClips(apiUrl)
-  .then(clips => {
-    // console.log(JSON.stringify(clips)); // Array of clips
-  });
+// fetchClips(apiUrl)
+//   .then(clips => {
+//     // console.log(JSON.stringify(clips)); // Array of clips
+//   });
 
-exports.doLoadClips = function () {
-  fetchClips(apiUrl)
+/*
+This should be called once by the bot at startup.
+*/
+exports.doLoadClips = function (channel) {
+  getUser(channel)
+  .then(user => {
+    url = API_BASE + `${user.id}&first=100`;
+    fetchClips(url, user)
     .then(clips => {
       console.log(`doLoadClips -> Number of clips: ${clipsArray.length}`)
       // console.log(JSON.stringify(clips)); // Array of clips
     });
-  }
+  })
+}
 
 for (let i = 0; i < process.argv.length; i++) {
   switch (process.argv[i]) {
     case 'cliptest':
-      setTimeout(function () {
-        // console.log(JSON.stringify(clipsArray))
-        console.log(`Number of clips: ${clipsArray.length}`)
-      }, 10000
-      );
+      this.doLoadClips('frumious__bandersnatch');
+      // setTimeout(function () {
+      //   // console.log(JSON.stringify(clipsArray))
+      //   console.log(`Number of clips: ${clipsArray.length}`)
+      // }, 10000
+      // );
       break;
 
     default:

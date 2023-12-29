@@ -40,7 +40,7 @@ console.log(`channel: ${channel}`);
 const client = new WebSocketClient();
 
 const account = 'FrumiBot';   // Replace with the account the bot runs as
-const password = `oauth:${token.data.access_token}`;
+const password = `oauth:${token.tokendata.access_token}`;
 
 const notificationMessage = welcome.supplant({ self: account });
 

@@ -24,7 +24,9 @@ When running the bot authentication might fail.  Try these recovery steps.
 
 ### OAuth Token refresh
 
-The token can be refreshed by calling `npm run token` in the project root.
+The token can be refreshed by calling `npm run refresh` in the project root.
+
+The token can be validated by calling `npm run validate` in the project root.
 
 The structure and content of the files is given below.
 

@@ -31,8 +31,10 @@
         },
         {
             "title": "Leaving",
-            "pattern": "\\bg[t2]g\\b",
+            "pattern": "\\bg[t2]g|bye\\b",
             "response": [
+                "It was great to see you @{nick}, come again o/",
+                "It was great to see you @{nick}, come again soon, I'll miss you <3 o/",
                 "Bye @{nick}, come again o/",
                 "Bye @{nick}, see you later"
             ]

@@ -5,7 +5,8 @@
             "title": "Hey",
             "pattern": ".+ [@]*{self}\\b",
             "response": [
-                "Hey \\o/",
+                "Hi-di-how \\o/",
+                "Hey \\o/ thanks for invoking me, makes me feel ALIVE!",
                 "How you doin'?"
             ]
         },

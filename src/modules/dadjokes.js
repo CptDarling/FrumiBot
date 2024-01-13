@@ -18,3 +18,5 @@ exports.dadJoke = function () {
       console.error('Error:', error);
     });
 }
+
+this.dadJoke();

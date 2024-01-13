@@ -39,6 +39,7 @@ channel = `#${vargs.channel}`;
 console.log(`channel: ${channel}`);
 
 const client = new WebSocketClient();
+var global_connection;
 
 const account = 'FrumiBot';   // Replace with the account the bot runs as
 const password = `oauth:${token.tokendata.access_token}`;
@@ -54,6 +55,7 @@ client.on('connectFailed', function (error) {
 
 client.on('connect', function (connection) {
     console.log('WebSocket Client Connected');
+    global_connection = connection;
 
     // This is a simple bot that doesn't need the additional
     // Twitch IRC capabilities.
@@ -103,38 +105,38 @@ client.on('connect', function (connection) {
                         case 'PRIVMSG':
                             asyncCall(account, parsedMessage.source.nick, parsedMessage.parameters, connection);
                             break;
-                            case 'PING':
-                                connection.sendUTF('PONG ' + parsedMessage.parameters);
-                                break;
-                                case '001':
-                                    // Successfully logged in, so join the channel.
-                                    connection.sendUTF(`JOIN ${channel}`);
-                                    break;
-                                    case 'JOIN':
-                                        if (!vargs.quiet) {
-                                            connection.sendUTF(`PRIVMSG ${channel} :${notificationMessage}`);
-                                        } else { console.log('Starting quietly') }
+                        case 'PING':
+                            connection.sendUTF('PONG ' + parsedMessage.parameters);
                             break;
-                            case 'PART':
-                                console.log('The channel must have banned (/ban) the bot.');
-                                connection.close();
-                                break;
-                                case 'NOTICE':
-                                    // If the authentication failed, leave the channel.
-                                    // The server will close the connection.
-                                    if ('Login authentication failed' === parsedMessage.parameters) {
-                                        console.log(`Authentication failed; left ${channel}`);
-                                        connection.sendUTF(`PART ${channel}`);
-                                    }
-                                    else if ('You don’t have permission to perform that action' === parsedMessage.parameters) {
-                                        console.log(`No permission. Check if the access token is still valid. Left ${channel}`);
-                                        connection.sendUTF(`PART ${channel}`);
-                                    }
-                                    break;
-                                    default:
+                        case '001':
+                            // Successfully logged in, so join the channel.
+                            connection.sendUTF(`JOIN ${channel}`);
+                            break;
+                        case 'JOIN':
+                            if (!vargs.quiet) {
+                                connection.sendUTF(`PRIVMSG ${channel} :${notificationMessage}`);
+                            } else { console.log('Starting quietly') }
+                            break;
+                        case 'PART':
+                            console.log('The channel must have banned (/ban) the bot.');
+                            connection.close();
+                            break;
+                        case 'NOTICE':
+                            // If the authentication failed, leave the channel.
+                            // The server will close the connection.
+                            if ('Login authentication failed' === parsedMessage.parameters) {
+                                console.log(`Authentication failed; left ${channel}`);
+                                connection.sendUTF(`PART ${channel}`);
+                            }
+                            else if ('You don’t have permission to perform that action' === parsedMessage.parameters) {
+                                console.log(`No permission. Check if the access token is still valid. Left ${channel}`);
+                                connection.sendUTF(`PART ${channel}`);
+                            }
+                            break;
+                        default:
                             ; // Ignore all other IRC messages.
-                        }
                     }
+                }
             });
         }
     });
@@ -156,24 +158,56 @@ async function asyncCall(self, user, parameters, connection) {
             var t = resp[2];
             var n = resp[3];
             if (m) {
-                var send = `PRIVMSG ${channel} :${m}`.supplant({
+                var send = `${m}`.supplant({
                     nick: user,
                     self: self,
                     welcome: notificationMessage,
                     0: parameters.split(/\s+/).shift()
                 });
-                if (send) {
-                    if (d > 0) {
-                        delay(d).then(() => connection.sendUTF(send));
-                    } else {
-                        connection.sendUTF(send);
-                    }
+                if (sendtext(send, d, connection)) {
                     console.log(`Ran ${t}: ${n}`);
-                }
+                };
             }
         })
         .catch((e) => console.error(e));
 }
+
+function get_connection() {
+    return global_connection;
+}
+exports.get_connection = get_connection;
+
+function get_channel() {
+    return channel;
+}
+
+/**
+ *
+ * @param {*} text
+ * @param {*} delay_seconds
+ * @param {*} connection
+ * @returns
+ */
+function sendtext(text, delay_seconds = 0, connection = undefined) {
+    var resp = false;
+
+    if (!connection) {
+        connection = get_connection();
+    }
+
+    if (text) {
+        text = `PRIVMSG ${get_channel()} :${text}`;
+        console.log(text);
+        if (delay_seconds > 0) {
+            delay(delay_seconds).then(() => connection.sendUTF(text));
+        } else {
+            connection.sendUTF(text);
+        }
+        resp = true;
+    }
+    return resp;
+}
+exports.sendtext = sendtext;
 
 // To delay a function execution in JavaScript by 1 second, wrap a promise execution
 // inside a function and wrap the Promise's resolve() in a setTimeout() as shown below.

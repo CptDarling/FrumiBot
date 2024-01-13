@@ -1,14 +1,13 @@
-
-const URL = 'https://icanhazdadjoke.com/';
+const API = 'https://icanhazdadjoke.com/';
 
 exports.dadJoke = function () {
-  const headers = {}
-
-  return fetch(URL, {
+  const headers = {
     headers: {
-      "Accept": "text/plain",
+      "Accept": "text/plain"
     }
-  })
+  }
+
+  return fetch(API, headers)
     .then(response => response.text())
     .then((text) => {
       console.log(text);
@@ -16,6 +15,7 @@ exports.dadJoke = function () {
     })
     .catch(error => {
       console.error('Error:', error);
+      return "I'm not in the mood right now, maybe later."
     });
 }
 

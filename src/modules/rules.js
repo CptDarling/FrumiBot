@@ -141,6 +141,18 @@ exports.processRules = async function (self, username, parameters, vargs) {
 
                             break;
 
+                        case 'initiative':
+                            r = r.supplant({
+                                dice: diceRoll('1d20'),
+                            });
+
+                            return resolve([r, 0, 'command', rules.commands[attr].title]);
+
+                            // Stop the for loop.
+                            executed = true;
+
+                            break;
+
                         case 'weather':
                             var location = parameters.split(/\s+/).slice(1).join(' ');
                             if (!location) {

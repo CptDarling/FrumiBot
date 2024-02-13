@@ -290,7 +290,8 @@
             "reject": [
                 "Stop trying to trick me @{nick}, {location} cannot have weather!",
                 "I'm afraid I can't do that @{nick}, there is no weather in {location}!",
-                "Are you sure {location} exists @{nick}, I can't find it anywhere?"
+                "Are you sure {location} exists @{nick}, I can't find it anywhere?",
+                "I'm afraid I cannot do that Dave"
             ]
         }
     ]

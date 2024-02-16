@@ -37,6 +37,11 @@
             ]
         },
         {
+            "title": "Degen Welcome",
+            "pattern": "^hi degens\\b",
+            "response": "Hi @{nick} \\o"
+        },
+        {
             "title": "Leaving",
             "pattern": "\\bg[t2]g\\b",
             "response": [

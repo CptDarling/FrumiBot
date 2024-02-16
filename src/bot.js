@@ -118,8 +118,8 @@ client.on('connect', function (connection) {
                             } else { console.log('Starting quietly') }
                             break;
                         case 'PART':
-                            console.log('The channel must have banned (/ban) the bot.');
-                            connection.close();
+                            console.log(`${parsedMessage.source.nick} has left the chat.`);
+                            // console.log('The channel must have banned (/ban) the bot.');
                             break;
                         case 'NOTICE':
                             // If the authentication failed, leave the channel.

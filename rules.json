@@ -29,12 +29,12 @@
             "title": "Absence",
             "pattern": "^brb\\b|^!lurk\\b",
             "response": [
-		    "Bye @{nick} o/",
-		    "See you later @{nick} good luck.",
-		    "Alrighty @{nick} see you later",
-		    "Don't be long @{nick} I'll miss you <3",
-		    "Best wishes @{nick}"
-	    ]
+                "Bye @{nick} o/",
+                "See you later @{nick} good luck.",
+                "Alrighty @{nick} see you later",
+                "Don't be long @{nick} I'll miss you <3",
+                "Best wishes @{nick}"
+            ]
         },
         {
             "title": "Leaving",

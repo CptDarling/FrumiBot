@@ -60,7 +60,7 @@ client.on('connect', function (connection) {
     // This is a simple bot that doesn't need the additional
     // Twitch IRC capabilities.
 
-    // connection.sendUTF('CAP REQ :twitch.tv/commands twitch.tv/membership twitch.tv/tags');
+    connection.sendUTF('CAP REQ :twitch.tv/commands twitch.tv/membership twitch.tv/tags');
 
     // Authenticate with the Twitch IRC server and then join the channel.
     // If the authentication fails, the server drops the connection.
@@ -90,17 +90,17 @@ client.on('connect', function (connection) {
 
     connection.on('message', function (ircMessage) {
         if (ircMessage.type === 'utf8') {
+
             let rawIrcMessage = ircMessage.utf8Data.trimEnd();
             console.log(`Message received (${new Date().toISOString()}): '${rawIrcMessage}'`);
 
             let messages = rawIrcMessage.split('\r\n');  // The IRC message may contain one or more messages.
             messages.forEach(message => {
                 let parsedMessage = parseMessage(message);
-
                 if (parsedMessage) {
                     // console.log(`Message command: ${parsedMessage.command.command}`);
                     // console.log(`\n${JSON.stringify(parsedMessage, null, 3)}`)
-
+                    // console.log("parsedMessage: ", parsedMessage)
                     switch (parsedMessage.command.command) {
                         case 'PRIVMSG':
                             asyncCall(account, parsedMessage.source.nick, parsedMessage.parameters, connection);
@@ -197,7 +197,7 @@ function sendtext(text, delay_seconds = 0, connection = undefined) {
 
     if (text) {
         text = `PRIVMSG ${get_channel()} :${text}`;
-        console.log(text);
+        // console.log(text);
         if (delay_seconds > 0) {
             delay(delay_seconds).then(() => connection.sendUTF(text));
         } else {
@@ -290,9 +290,17 @@ function parseMessage(message) {
     else {
         if (null != rawTagsComponent) {  // The IRC message contains tags.
             parsedMessage.tags = parseTags(rawTagsComponent);
+            // console.log("parsedMessage.tags['display-name']", parsedMessage.tags['display-name'])
         }
 
         parsedMessage.source = parseSource(rawSourceComponent);
+        if (parsedMessage.tags) {
+            if (parsedMessage.tags['display-name']) {
+                parsedMessage.source.nick = parsedMessage.tags['display-name']
+            }
+            // console.log("parsedMessage.source: ", parsedMessage.source);
+            // console.log("parsedMessage.tags['display-name']", parsedMessage.tags['display-name'])
+        }
 
         parsedMessage.parameters = rawParametersComponent;
 

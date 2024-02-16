@@ -72,6 +72,11 @@ client.on('connect', function (connection) {
     let notObj = setInterval(() => {
         connection.sendUTF(`PRIVMSG ${channel} :${notificationMessage}`);
     }, (notificationInterval));
+    if (!vargs.quiet) {
+        connection.sendUTF(`PRIVMSG ${channel} :${notificationMessage}`);
+    } else {
+        console.log('Starting quietly')
+    }
 
     connection.on('error', function (error) {
         console.log("Connection Error: " + error.toString());
@@ -114,9 +119,6 @@ client.on('connect', function (connection) {
                             break;
                         case 'JOIN':
                             // This is the standard JOIN message that you receive when a user joins the chat room.
-                            // if (!vargs.quiet) {
-                                // connection.sendUTF(`PRIVMSG ${channel} :${notificationMessage}`);
-                            // } else { console.log('Starting quietly') }
                             break;
                         case 'PART':
                             console.log(`${parsedMessage.source.nick} has left the chat.`);

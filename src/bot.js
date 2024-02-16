@@ -119,10 +119,10 @@ client.on('connect', function (connection) {
                             break;
                         case 'JOIN':
                             // This is the standard JOIN message that you receive when a user joins the chat room.
-                            console.log(`${parsedMessage.source.nick} has joined the chat`);
+                            console.log(`JOIN: ${parsedMessage.source.nick} has joined the chat`);
                             break;
                         case 'PART':
-                            console.log(`${parsedMessage.source.nick} has left the chat.`);
+                            console.log(`EXIT: ${parsedMessage.source.nick} has left the chat.`);
                             // console.log('The channel must have banned (/ban) the bot.');
                             break;
                         case 'NOTICE':

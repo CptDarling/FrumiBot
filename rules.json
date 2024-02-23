@@ -92,6 +92,12 @@
             ]
         },
         {
+            "title": "Sorry about the language",
+            "pattern": "^!soz\\b",
+            "mod_only": true,
+            "response": "Dear chat, I apologise for the filthy language that may emanate from the streamer, it is only to be expected under the circumstances."
+        },
+        {
             "title": "Chatup line",
             "pattern": "^!chatup\\b",
             "delay": 15,

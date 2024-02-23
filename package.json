@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "refresh": "node ./src/token.js refresh",
     "validate": "node ./src/token.js validate",
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "quiet": "node ./bin/www --quiet"
   },
   "author": "Richard Holyoak",
   "license": "ISC",

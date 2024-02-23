@@ -110,6 +110,9 @@ client.on('connect', function (connection) {
                         case 'PRIVMSG':
                             asyncCall(account, parsedMessage, connection);
                             break;
+                        case 'WHISPER':
+                            console.log(`WHISPER: ${parsedMessage}`);
+                            break;
                         case 'PING':
                             connection.sendUTF('PONG ' + parsedMessage.parameters);
                             break;

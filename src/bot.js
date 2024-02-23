@@ -44,7 +44,7 @@ var global_connection;
 const account = 'FrumiBot';   // Replace with the account the bot runs as
 const password = `oauth:${token.tokendata.access_token}`;
 
-const notificationMessage = welcome.supplant({ self: account });
+const announcement = welcome.supplant({ self: account });
 
 // const notificationInterval = 1000 * 60 * 1;
 const notificationInterval = 1000 * 60 * 60;
@@ -70,10 +70,10 @@ client.on('connect', function (connection) {
 
     // Set a timer to post a notification for FrumiBot.
     let notObj = setInterval(() => {
-        connection.sendUTF(`PRIVMSG ${channel} :${notificationMessage}`);
+        connection.sendUTF(`PRIVMSG ${channel} :${announcement}`);
     }, (notificationInterval));
     if (!vargs.quiet) {
-        connection.sendUTF(`PRIVMSG ${channel} :${notificationMessage}`);
+        connection.sendUTF(`PRIVMSG ${channel} :${announcement}`);
     } else {
         console.log('Starting quietly')
     }
@@ -158,32 +158,32 @@ async function asyncCall(self, parsedMessage, connection) {
     await modules.rules.processRules(self, user, parameters, vargs)
         .then((resp) => {
             // console.log(msg);
-            var m = resp[0];
-            var d = resp[1];
+            var rawMessage = resp[0];
+            var delayTime = resp[1];
             var modCheck = resp[2];
-            var t = resp[3];
-            var n = resp[4];
-            if (m) {
-                var send = `${m}`.supplant({
+            var interactionType = resp[3];
+            var subjectText = resp[4];
+            if (rawMessage) {
+                var send = `${rawMessage}`.supplant({
                     nick: user,
                     self: self,
-                    welcome: notificationMessage,
+                    welcome: announcement,
                     0: parameters.split(/\s+/).shift()
                 });
                 if (modCheck) {
                     // only send if the chat is from a mod or the broadcaster
                     if (parsedMessage.tags.mod == 1 || parsedMessage.tags.badges.broadcaster == 1) {
-                        if (sendtext(send, d, connection)) {
+                        if (sendtext(send, delayTime, connection)) {
                             if (parsedMessage.tags.badges.broadcaster == 1) {
-                                console.log(`Broadcaster ran ${t}: ${n}`);
+                                console.log(`Broadcaster ran ${interactionType}: ${subjectText}`);
                             } else {
-                                console.log(`Moderator ran ${t}: ${n}`);
+                                console.log(`Moderator ran ${interactionType}: ${subjectText}`);
                             }
                         };
                     }
                 } else {
-                    if (sendtext(send, d, connection)) {
-                        console.log(`Ran ${t}: ${n}`);
+                    if (sendtext(send, delayTime, connection)) {
+                        console.log(`Ran ${interactionType}: ${subjectText}`);
                     };
                 }
             }

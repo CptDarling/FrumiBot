@@ -56,6 +56,7 @@ exports.processRules = async function (self, username, parameters, vargs) {
                 });
                 var r = rules.commands[attr].response;
                 var rej = rules.commands[attr].reject;
+                var mod = rules.patterns[attr].mod_only;
 
                 const re = new RegExp(p);
 
@@ -86,7 +87,7 @@ exports.processRules = async function (self, username, parameters, vargs) {
                                 r = r.supplant({
                                     joke: msg,
                                 })
-                                return resolve([r, 0, 'command', rules.commands[attr].title]);
+                                return resolve([r, 0, mod, 'command', rules.commands[attr].title]);
 
                             });
 
@@ -107,7 +108,7 @@ exports.processRules = async function (self, username, parameters, vargs) {
                                     timeZone: 'Europe/Warsaw',
                                 }).format(date)
                             });
-                            return resolve([r, 0, 'command', rules.commands[attr].title]);
+                            return resolve([r, 0, mod, 'command', rules.commands[attr].title]);
 
                             // Stop the for loop.
                             executed = true;
@@ -122,7 +123,7 @@ exports.processRules = async function (self, username, parameters, vargs) {
                                 echo: msg,
                             });
 
-                            return resolve([r, 0, 'command', rules.commands[attr].title]);
+                            return resolve([r, 0, mod, 'command', rules.commands[attr].title]);
 
                             // Stop the for loop.
                             executed = true;
@@ -134,7 +135,7 @@ exports.processRules = async function (self, username, parameters, vargs) {
                                 dice: diceRoll(parameters.split(/\s+/)[1]),
                             });
 
-                            return resolve([r, 0, 'command', rules.commands[attr].title]);
+                            return resolve([r, 0, mod, 'command', rules.commands[attr].title]);
 
                             // Stop the for loop.
                             executed = true;
@@ -146,7 +147,7 @@ exports.processRules = async function (self, username, parameters, vargs) {
                                 dice: diceRoll('1d20'),
                             });
 
-                            return resolve([r, 0, 'command', rules.commands[attr].title]);
+                            return resolve([r, 0, mod, 'command', rules.commands[attr].title]);
 
                             // Stop the for loop.
                             executed = true;
@@ -171,7 +172,7 @@ exports.processRules = async function (self, username, parameters, vargs) {
                                     })
                                     // console.log(`DATA: ${JSON.stringify(data, null, 2)}`);
                                     // console.log(`r: ${r}`);
-                                    return resolve([r, 0, 'command', rules.commands[attr].title]);
+                                    return resolve([r, 0, mod, 'command', rules.commands[attr].title]);
                                 })
                                 .catch((e) => {
                                     switch (e) {
@@ -214,6 +215,7 @@ exports.processRules = async function (self, username, parameters, vargs) {
                 var r = rules.patterns[attr].response;
                 var c = rules.patterns[attr].choices;
                 var d = rules.patterns[attr].delay;
+                var mod = rules.patterns[attr].mod_only;
 
                 const re = new RegExp(p, 'i');
 
@@ -230,7 +232,7 @@ exports.processRules = async function (self, username, parameters, vargs) {
                         });
                     }
                     resp = r;
-                    return resolve([r, d, 'response', rules.patterns[attr].title]);
+                    return resolve([r, d, mod, 'response', rules.patterns[attr].title]);
                 }
             }
         }

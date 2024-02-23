@@ -68,6 +68,7 @@
         {
             "title": "Toilet Break",
             "pattern": "^!toot\\b",
+            "mod_only": true,
             "delay": 1,
             "response": [
                 "!chair",
@@ -79,6 +80,7 @@
         {
             "title": "Join in the fun",
             "pattern": "^!fbjoin\\b",
+            "mod_only": true,
             "delay": 4,
             "response": "!join"
         },
@@ -100,6 +102,7 @@
         {
             "title": "Chatup line",
             "pattern": "^!chatup\\b",
+            "mod_only": true,
             "delay": 15,
             "response": [
                 "Are you a beaver? Cause daaaaaaaaam!",
@@ -252,6 +255,7 @@
         {
             "title": "Croud",
             "pattern": "^!croud\\b",
+            "mod_only": true,
             "response": "jackehParty jackehJam jackehParty jackehJam jackehDerp jackehPopacap jackehParty jackehJam LUL jackehAnnoyed jackehPuppyEyes jackehUgh jackehDerp jackehUgh jackehHellYeah CoolStoryBob jackehHellYeah jackehPopacap jackehParty jackehJam jackehLaCroix LUL jackehAnnoyed jackehLulz CoolStoryBob jackehFlip jackehLaCroix jackehDerp jackehDerp jackehParty jackehParty jackehParty jackehJam jackehParty jackehAnnoyed CoolStoryBob jackehHellYeah jackehAnnoyed jackehJam jackehJam jackehAnnoyed jackehFlip"
         },
         {
@@ -279,6 +283,7 @@
         {
             "title": "Refresh from Rules File",
             "command": "refresh",
+            "mod_only": true,
             "pattern": "^!fb\\b",
             "response": [
                 "Electrodes activated",

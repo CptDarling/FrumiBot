@@ -108,7 +108,7 @@ client.on('connect', function (connection) {
                     // console.log("parsedMessage: ", parsedMessage)
                     switch (parsedMessage.command.command) {
                         case 'PRIVMSG':
-                            asyncCall(account, parsedMessage.source.nick, parsedMessage.parameters, connection);
+                            asyncCall(account, parsedMessage, connection);
                             break;
                         case 'PING':
                             connection.sendUTF('PONG ' + parsedMessage.parameters);
@@ -151,16 +151,18 @@ if (!vargs.noconnect) {
     client.connect('ws://irc-ws.chat.twitch.tv:80');
 }
 
-async function asyncCall(self, user, parameters, connection) {
+async function asyncCall(self, parsedMessage, connection) {
     // console.log(`${JSON.stringify(parsedMessage)}`);
-
+    let user = parsedMessage.source.nick;
+    let parameters = parsedMessage.parameters;
     await modules.rules.processRules(self, user, parameters, vargs)
         .then((resp) => {
             // console.log(msg);
             var m = resp[0];
             var d = resp[1];
-            var t = resp[2];
-            var n = resp[3];
+            var modCheck = resp[2];
+            var t = resp[3];
+            var n = resp[4];
             if (m) {
                 var send = `${m}`.supplant({
                     nick: user,
@@ -168,9 +170,22 @@ async function asyncCall(self, user, parameters, connection) {
                     welcome: notificationMessage,
                     0: parameters.split(/\s+/).shift()
                 });
-                if (sendtext(send, d, connection)) {
-                    console.log(`Ran ${t}: ${n}`);
-                };
+                if (modCheck) {
+                    // only send if the chat is from a mod or the broadcaster
+                    if (parsedMessage.tags.mod == 1 || parsedMessage.tags.badges.broadcaster == 1) {
+                        if (sendtext(send, d, connection)) {
+                            if (parsedMessage.tags.badges.broadcaster == 1) {
+                                console.log(`Broadcaster ran ${t}: ${n}`);
+                            } else {
+                                console.log(`Moderator ran ${t}: ${n}`);
+                            }
+                        };
+                    }
+                } else {
+                    if (sendtext(send, d, connection)) {
+                        console.log(`Ran ${t}: ${n}`);
+                    };
+                }
             }
         })
         .catch((e) => console.error(e));

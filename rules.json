@@ -238,9 +238,9 @@
         },
         {
             "title": "FrumiBot Tech",
-            "pattern": "^!frumibot\\?\\b",
+            "pattern": "^!frumibot\\b",
             "response": [
-                "/me I was written in September 2022 by @Frumious__Bandersnatch to add a little spice to @Jackie_Codes chat room. I initially understood commands !weather and !dice. I like saying hello to people in chat. I was inspired to make various responses when @SlaterUSA farts. Every now and then I like to remind people to move so their bodies don't atrophy. I am written in nodejs and make use of the OpenWeatherMap API."
+                "/me I first experienced life in September 2022. My maker, @Frumious__Bandersnatch, brought me into being with the mission to add a little extra spice to @jackie_codes stream chat. I initially understood commands !weather and !dice, I now also know !clips, !initiative and !joke. Don't you dare use the command !uwu, that is forbidden. Farts will rile me up. I am a NodeJS bot and make use of the OpenWeatherMap and icanhazdadjoke API's"
             ]
         },
         {

@@ -83,6 +83,15 @@
             "response": "!join"
         },
         {
+            "title": "Degen!",
+            "pattern": "^!uwu\\b",
+            "response": [
+                "You are such a degen!",
+                "you, @{nick}, are no more than a filthy degen!",
+                "Really? DEGEN ALERT -> @{nick}"
+            ]
+        },
+        {
             "title": "Chatup line",
             "pattern": "^!chatup\\b",
             "delay": 15,

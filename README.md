@@ -50,11 +50,13 @@ curl -X POST https://id.twitch.tv/oauth2/token -H 'Content-Type: application/x-w
 
 ### Read and edit permissions
 
-If authentication has failed after the token refresh get a new OAuth password.
+If authentication has failed after the token refresh or you require a new scope get a new OAuth password.
 
 ```shell
-twitch token -u -s 'chat:read chat:edit'
+twitch token -u -s 'channel:read:ads chat:edit chat:read moderation:read'
 ```
+
+After requesting a new scope, update the `access_token` and `refresh_token` values in `token.json`.
 
 If you see this error when getting a token:
 `An attempt was made to access a socket in a way forbidden by its access permissions` try these steps.

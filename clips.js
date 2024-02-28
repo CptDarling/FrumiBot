@@ -45,11 +45,6 @@ const fetchClips = (url, user) => {
     });
 };
 
-// fetchClips(apiUrl)
-//   .then(clips => {
-//     // console.log(JSON.stringify(clips)); // Array of clips
-//   });
-
 /*
 This should be called once by the bot at startup.
 */
@@ -60,7 +55,6 @@ exports.doLoadClips = function (channel) {
     fetchClips(url, user)
     .then(clips => {
       console.log(`doLoadClips -> Number of clips: ${clipsArray.length}`)
-      // console.log(JSON.stringify(clips)); // Array of clips
     });
   })
 }
@@ -69,11 +63,6 @@ for (let i = 0; i < process.argv.length; i++) {
   switch (process.argv[i]) {
     case 'cliptest':
       this.doLoadClips('frumious__bandersnatch');
-      // setTimeout(function () {
-      //   // console.log(JSON.stringify(clipsArray))
-      //   console.log(`Number of clips: ${clipsArray.length}`)
-      // }, 10000
-      // );
       break;
 
     default:

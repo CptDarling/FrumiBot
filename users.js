@@ -27,4 +27,4 @@ exports.getUser = function (login) {
   });
 }
 
-this.getUser('frumious__bandersnatch').then(resp => console.log(resp));
+// this.getUser('frumious__bandersnatch').then(resp => console.log(resp));

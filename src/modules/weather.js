@@ -1,11 +1,14 @@
 require("dotenv").config({ path: "./.env" });
 
-exports.getWeather = function (location) {
+const { weatherRepord } = require('./jinsy.js');
+
+function getWeather(location) {
     return new Promise((resolve, reject) => {
 
-        console.log(`location: ${location}`);
-
-        const req = new Request(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${process.env.OWM_API_KEY}`);
+        // console.log(`location: ${location}`);
+        const uri = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${process.env.OWM_API_KEY}`;
+        console.log(uri);
+        const req = new Request(uri);
 
         fetch(req)
             .then((res) => {
@@ -19,7 +22,7 @@ exports.getWeather = function (location) {
             .then((json) => {
                 // console.log(`DATA: ${JSON.stringify(json, null, 2)}`);
                 if (json) {
-                    console.log(`CODE: ${JSON.stringify(json['cod'], null, 2)}`);
+                    // console.log(`CODE: ${JSON.stringify(json['cod'], null, 2)}`);
                     switch (json['cod']) {
                         case 404:
                             return reject(`OWM Error ${json['message']}`);
@@ -27,7 +30,7 @@ exports.getWeather = function (location) {
                             break;
 
                         case 200:
-                            var c = parseFloat(json['main']['temp'] - 273.15);
+                            var c = parseFloat(json['main']['temp']);
                             var resp = {
                                 celcius: parseFloat(c.toFixed(1)),
                                 fahrenheit: parseFloat((c * 1.8 + 32).toFixed(1)),
@@ -36,6 +39,8 @@ exports.getWeather = function (location) {
                                 country: json['sys']['country'],
                                 description: json['weather'][0]['description'],
                                 visibility: parseFloat(parseFloat(json['visibility'] / 1000.0).toFixed(1)),
+                                weatherid: json.weather[0].id,
+                                jinsy: weatherRepord(json),
                             }
                             // console.log(`RESP: ${JSON.stringify(resp, null, 2)}`);
                             return resolve(resp);
@@ -50,3 +55,40 @@ exports.getWeather = function (location) {
             .catch((e) => console.error(e));
     })
 }
+
+function testWeather() {
+    ([
+        'lutterworth',
+        'Wrocław',
+        // 'miami',
+        // 'moon',
+        // 'warsaw',
+        // 'Ammanford',
+        // 'thisplacedoesnotexist',
+        // 'moscow',
+        // 'Argentina',
+        // 'Japan',
+        // 'mcmurdo',
+        // 'lahore',
+        // 'bangladesh',
+    ]).forEach(element => {
+        getWeather(element)
+        .then(resp => { console.log(`${resp.weatherid}(${element}): ${resp.jinsy}`); })
+        .catch((error) => {
+            console.error(`onRejected function called for ${element}: ${error}`);
+        });
+    });
+}
+
+for (let i = 0; i < process.argv.length; i++) {
+    switch (process.argv[i]) {
+        case 'test':
+            testWeather();
+            break;
+
+        default:
+            break;
+    }
+}
+
+exports.getWeather = getWeather;

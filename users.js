@@ -23,7 +23,9 @@ exports.getUser = function (login) {
 
     fetch(endpoint, { headers })
       .then((res) => res.json())
-      .then((obj) => resolve(obj.data[0]));
+      .then((obj) => resolve(obj.data[0]))
+      .catch(error => console.error(error))
+      ;
   });
 }
 

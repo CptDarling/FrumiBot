@@ -1,10 +1,11 @@
 const fs = require('fs');
 const { refresh } = require('../../token.json');
-const { getWeather } = require('./weather');
+const { getWeather } = require('./weather.js');
 const { resolve } = require('path');
 const { diceRoll } = require('./dice');
 const { dadJoke } = require('./dadjokes');
 const { getRandomClip } = require('../../clips.js');
+const { getJinsyData } = require('./jinsy.js')
 
 var dataAvailable = false;
 var rules = {
@@ -12,11 +13,11 @@ var rules = {
     commands: []
 };
 
-getData()
+getRulesData()
     .then(() => console.log('Rules loaded'))
     .catch((e) => console.error(e));
 
-function getData() {
+function getRulesData() {
     return new Promise((resolve, reject) => {
         dataAvailable = false;
         fs.readFile('./rules.json', 'utf8', (err, data) => {
@@ -116,7 +117,8 @@ exports.processRules = async function (self, username, parameters, vargs) {
                             break;
 
                         case 'refresh':
-                            getData();
+                            getRulesData();
+                            getJinsyData();
 
                             var msg = parameters.split(/\s+/).slice(1).join(' ');
                             r = r.supplant({

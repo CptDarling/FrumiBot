@@ -49,6 +49,9 @@ const announcement = welcome.supplant({ self: account });
 // const notificationInterval = 1000 * 60 * 1;
 const notificationInterval = 1000 * 60 * 60;
 
+// Backseating mode
+var backseat = false
+
 client.on('connectFailed', function (error) {
     console.log('Connect Error: twitch --help' + error.toString());
 });

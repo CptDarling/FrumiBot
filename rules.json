@@ -324,6 +324,17 @@
                 "Are you sure {location} exists @{nick}, I can't find it anywhere?",
                 "I'm afraid I cannot do that Dave"
             ]
+        },
+        {
+            "title": "Backseat Mode",
+            "command": "backseat",
+            "pattern": "^!backseat\\b",
+            "reject": [
+                "Backseating is off now, well done everyone. I'm sure it was very helpful."
+            ],
+            "response": [
+                "Have you tried turning it off and on again?"
+            ]
         }
     ]
 }

@@ -4,6 +4,7 @@ const { getWeather } = require('./weather');
 const { resolve } = require('path');
 const { diceRoll } = require('./dice');
 const { dadJoke } = require('./dadjokes');
+const { backseat, backseatMode } = require('./backseat');
 const { getRandomClip } = require('../../clips.js');
 
 var dataAvailable = false;
@@ -91,8 +92,10 @@ exports.processRules = async function (self, username, parameters, vargs) {
 
                             });
 
+
                             // Stop the for loop.
                             executed = true;
+
 
                             break;
 
@@ -135,19 +138,21 @@ exports.processRules = async function (self, username, parameters, vargs) {
                                 dice: diceRoll(parameters.split(/\s+/)[1]),
                             });
 
-                            return resolve([r, 0, mod, 'command', rules.commands[attr].title]);
+                            return resolve([r, 0, 'command', rules.commands[attr].title]);
 
                             // Stop the for loop.
                             executed = true;
 
                             break;
 
-                        case 'initiative':
-                            r = r.supplant({
-                                dice: diceRoll('1d20'),
-                            });
+                        case 'backseat':
+                            backseatMode.backseat = !backseatMode.backseat;
+                            if (backseatMode.backseat) {
 
-                            return resolve([r, 0, mod, 'command', rules.commands[attr].title]);
+                            } else {
+
+                            }
+                            return resolve([r, 0, 'command', rules.commands[attr].title]);
 
                             // Stop the for loop.
                             executed = true;

@@ -90,14 +90,15 @@
             "response": [
                 "You are such a degen!",
                 "you, @{nick}, are no more than a filthy degen!",
-                "Really? DEGEN ALERT -> @{nick}"
+                "Really? DEGEN ALERT -> @{nick}",
+                "I refer you to, yo mamma!"
             ]
         },
         {
             "title": "Sorry about the language",
             "pattern": "^!soz\\b",
             "mod_only": true,
-            "response": "Dear chat, I apologise for the filthy language that may emanate from the streamer, it is only to be expected under the circumstances."
+            "response": "Dear chat, I apologise for the filthy language that may emanate from our beloved streamer, it is only to be expected under the circumstances."
         },
         {
             "title": "Chatup line",

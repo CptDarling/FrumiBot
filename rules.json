@@ -55,9 +55,10 @@
             "title": "Hello",
             "pattern": "^(hi|hello|hallo|hello)!*$",
             "response": [
-                "Hi, nice to meet you @{nick}",
-                "Hi @{nick} it's a pleasure to welcome you",
-                "Hi @{nick} nice to see you here. Pull up a seat and I hope you enjoy the show."
+                "Hi, nice to see you here @{nick}",
+                "Hi @{nick} It's my great pleasure to welcome you.",
+                "Hi @{nick} Nice to see you here. Pull up a seat and I hope you enjoy the show.",
+                "Hi @{nick} Welcome in, pick a chair (for sitting, not throwing)"
             ]
         },
         {

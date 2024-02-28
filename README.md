@@ -53,7 +53,7 @@ curl -X POST https://id.twitch.tv/oauth2/token -H 'Content-Type: application/x-w
 If authentication has failed after the token refresh or you require a new scope get a new OAuth password.
 
 ```shell
-twitch token -u -s 'channel:read:ads chat:edit chat:read moderation:read'
+twitch token -u -s 'chat:edit chat:read whispers:read'
 ```
 
 After requesting a new scope, update the `access_token` and `refresh_token` values in `token.json`.

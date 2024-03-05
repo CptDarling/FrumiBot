@@ -103,7 +103,7 @@
         },
         {
             "title": "Chatup line",
-            "pattern": "^!chatup\\b",
+            "pattern": "^!cu\\b",
             "mod_only": true,
             "delay": 15,
             "response": [
@@ -134,12 +134,12 @@
                 "I can't tell if that was an earthquake, or if you just seriously rocked my world.",
                 "I didn't know what I wanted in a woman until I saw you.",
                 "I don't know which is prettier today—the weather, or your eyes.",
-                "I don't know your name, but I'm sure it's as beautiful as you are. I'm {nick}.",
+                "I don't know your name, but I'm sure it's as beautiful as you are.",
                 "I hope you know CPR, because you just took my breath away!",
                 "I just had to tell you, your beauty made me truly appreciate being able to see.",
                 "I never believed in love at first sight, but that was before I saw you.",
                 "I ought to complain to Spotify for you not being named this week's hottest single.",
-                "I saw you walking by and I had to come say hello. I love your style. My name's (your name).",
+                "I saw you walking by and I had to come say hello. I love your style.",
                 "I seem to have lost my number—can I have yours?",
                 "I started reading/watching an interesting book/show last week, and I'd love to discuss it with someone. Have you heard of it?",
                 "I swear someone stole the stars from the sky and put them in your eyes.",

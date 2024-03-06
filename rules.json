@@ -1,5 +1,5 @@
 {
-    "welcome": "/me Hello, I'm {self}. Please say hi and ask me about !dice [<number>|<dies>d<sides>] or !weather [<location>]. Use !initiative to roll for initiative. Use !clip to fetch a random clip from the archive. Use !frumibot to read a little bit about me. Don't you dare use !uwu, that is forbidden. Use !joke for an outrageously funny joke.",
+    "welcome": "/me Hello, I'm {self}. Please say hi and ask me about !fbcommands, !dice [<number>|<dies>d<sides>] or !weather [<location>]. Use !initiative to roll for initiative. Use !clip to fetch a random clip from the archive. Use !frumibot to read a little bit about me. Don't you dare use !uwu, that is forbidden. Use !joke for an outrageously funny joke.",
     "patterns": [
         {
             "title": "Hey",
@@ -11,6 +11,12 @@
                 "HELL YEAH \\o/",
                 "Let's PARTY !!!"
             ]
+        },
+        {
+            "title": "FrumiBot Commands List",
+	    "pattern": "^!fbcommands\\b|^!fbc\\b",
+            "delay": 5,
+	    "response": "!fbcommands !dice [<number>|<dies>d<sides>] !weather [<location>] !initiative !joke !clip !frumibot !uwu (don't you dare!)"
         },
         {
             "title": "VLDL Fishing",

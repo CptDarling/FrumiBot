@@ -229,7 +229,7 @@
         },
         {
             "title": "Degens",
-            "pattern": "^cheer5000\\b",
+            "pattern": "^[cC]heer5000\\b",
             "response": [
                 "OH NO, HERE WE GO!",
                 "UWU {choose}",
@@ -245,14 +245,14 @@
         },
         {
             "title": "420",
-            "pattern": "^cheer420\\b",
+            "pattern": "^[cC]heer420\\b",
             "response": [
                 "@{nick} is tokin' it tonight"
             ]
         },
         {
             "title": "Fart",
-            "pattern": "\\bplayed .*fart\\b|^cheer69\\b",
+            "pattern": "\\bplayed .*fart\\b|^[cC]heer69\\b",
             "response": [
                 "Oh excuse you @{0}, that was {choose}!",
                 "Oh excuse you @{0}, that was {choose}!",

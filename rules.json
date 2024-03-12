@@ -228,6 +228,22 @@
             ]
         },
         {
+            "title": "Degens",
+            "pattern": "^cheer5000\\b",
+            "response": [
+                "OH NO, HERE WE GO!",
+                "UWU {choose}",
+                "SHAME! SHAME!",
+                "YOU SHOULD BE ASHAMED OF YOURSELF @{nick} !"
+            ],
+            "choices": [
+                "You are such a degen!",
+                "you, @{nick}, are no more than a filthy degen!",
+                "Really? DEGEN ALERT -> @{nick}",
+                "I refer you to, yo mamma!"
+            ]
+        },
+        {
             "title": "Fart",
             "pattern": "\\bplayed .*fart\\b|^cheer69\\b",
             "response": [

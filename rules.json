@@ -244,6 +244,13 @@
             ]
         },
         {
+            "title": "420",
+            "pattern": "^cheer420\\b",
+            "response": [
+                "@{nick} is tokin' it tonight"
+            ]
+        },
+        {
             "title": "Fart",
             "pattern": "\\bplayed .*fart\\b|^cheer69\\b",
             "response": [

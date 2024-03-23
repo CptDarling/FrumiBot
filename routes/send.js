@@ -5,8 +5,8 @@ var { sendtext } = require('../src/bot.js');
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
-  sendtext("!fb");
-  res.send('sent !fb to the server');
+  sendtext("Hello, World!");
+  res.send('sent to the server');
 });
 
 module.exports = router;
